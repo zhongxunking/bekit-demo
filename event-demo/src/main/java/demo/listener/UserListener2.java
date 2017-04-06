@@ -28,7 +28,6 @@ public class UserListener2 {
         logger.info("UserListener2监听到添加用户事件：{}", event);
     }
 
-
     // @Listen的属性priorityAsc=false表示按照优先级倒叙排序，结合@BizListener(priority = 2)中priority属性，表示删除用户事件发生后本监听方法倒数第二个执行
     @Listen(priorityAsc = false)
     public void listenDeleteUserEvent(DeleteUserEvent event) {
