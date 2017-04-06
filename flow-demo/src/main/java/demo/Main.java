@@ -12,7 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- *
+ * 流程引擎使用展示
+ * （请在application.properties修改数据库配置信息）
  */
 @SpringBootApplication
 public class Main {
