@@ -24,6 +24,9 @@ public class Transfer {
     private Long id;
 
     @Column(length = 20, unique = true)
+    private String orderNo;
+
+    @Column(length = 20, unique = true)
     private String bizNo;
 
     @Column(length = 20)
@@ -45,6 +48,14 @@ public class Transfer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getBizNo() {
@@ -89,6 +100,6 @@ public class Transfer {
 
     @Override
     public String toString() {
-        return String.format("Transfer{id=%d,bizNo=%s,payerAccountNo=%s,payeeAccountNo=%s,amount=%d,status=%s}", id, bizNo, payerAccountNo, payeeAccountNo, amount, status);
+        return String.format("Transfer{id=%d,orderNo=%s,bizNo=%s,payerAccountNo=%s,payeeAccountNo=%s,amount=%d,status=%s}", id, orderNo, bizNo, payerAccountNo, payeeAccountNo, amount, status);
     }
 }

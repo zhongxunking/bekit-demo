@@ -21,5 +21,10 @@
             <groupId>top.bekit</groupId>
             <artifactId>service</artifactId>
         </dependency>
+        <dependency>
+            <groupId>demo</groupId>
+            <artifactId>flow-demo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

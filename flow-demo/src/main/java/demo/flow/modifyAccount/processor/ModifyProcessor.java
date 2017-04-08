@@ -44,8 +44,8 @@ public class ModifyProcessor {
             case 2:
                 return ResultStatus.PROCESS;
             default:
-                return ResultStatus.PROCESS;
-//                throw new TimeoutException("模拟调用账务系统超时");
+//                return ResultStatus.PROCESS;
+                throw new TimeoutException("模拟调用账务系统超时");
         }
     }
 
