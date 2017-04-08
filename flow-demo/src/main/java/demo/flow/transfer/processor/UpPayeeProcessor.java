@@ -11,8 +11,10 @@ package demo.flow.transfer.processor;
 import demo.entity.ModifyAccount;
 import demo.entity.Transfer;
 import demo.enums.Direction;
+import demo.enums.ModifyAccountStatus;
 import demo.enums.ModifyAccountType;
 import demo.enums.ResultStatus;
+import demo.utils.OID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,8 @@ public class UpPayeeProcessor {
         modifyAccount.setAccountNo(transfer.getPayeeAccountNo());
         modifyAccount.setDirection(Direction.UP);
         modifyAccount.setAmount(transfer.getAmount());
+        modifyAccount.setStatus(ModifyAccountStatus.MODIFY);
+        modifyAccount.setRefOrderNo(OID.newId());
 
         return modifyAccount;
     }

@@ -26,6 +26,6 @@ public interface ModifyAccountDao {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     ModifyAccount findLockByTransferBizNoAndTransferStatus(String transferBizNo, TransferStatus transferStatus);
 
-    ModifyAccount findTransferBizNoAndTransferStatus(String transferBizNo, TransferStatus transferStatus);
+    ModifyAccount findByTransferBizNoAndTransferStatus(String transferBizNo, TransferStatus transferStatus);
 
 }

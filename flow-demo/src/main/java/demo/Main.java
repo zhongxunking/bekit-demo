@@ -9,6 +9,7 @@
 package demo;
 
 import demo.entity.Transfer;
+import demo.enums.TransferStatus;
 import demo.utils.OID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,10 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
         FlowEngine flowEngine = applicationContext.getBean(FlowEngine.class);
-        Transfer transfer = flowEngine.insertTargetAndStart("transferFlow", buildTransfer(), null);
-        logger.info("转账交易执行结果：{}", transfer);
+        for (int i = 0; i < 10; i++) {
+            Transfer transfer = flowEngine.insertTargetAndStart("transferFlow", buildTransfer(), null);
+            logger.info("转账交易执行结果：{}", transfer);
+        }
     }
 
     private static Transfer buildTransfer() {
@@ -41,6 +44,7 @@ public class Main {
         transfer.setPayerAccountNo(OID.newId());
         transfer.setPayeeAccountNo(OID.newId());
         transfer.setAmount((long) RANDOM.nextInt(10000));
+        transfer.setStatus(TransferStatus.DOWN_PAYER);
 
         return transfer;
     }

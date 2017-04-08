@@ -8,11 +8,9 @@
  */
 package demo.flow.transfer;
 
+import demo.entity.Transfer;
 import demo.enums.ResultStatus;
-import top.bekit.flow.annotation.flow.EndNode;
-import top.bekit.flow.annotation.flow.Flow;
-import top.bekit.flow.annotation.flow.StartNode;
-import top.bekit.flow.annotation.flow.StateNode;
+import top.bekit.flow.annotation.flow.*;
 
 /**
  * 转账交易流程
@@ -30,12 +28,7 @@ import top.bekit.flow.annotation.flow.StateNode;
 @Flow
 public class TransferFlow {
 
-    @StartNode
-    public String start() {
-        return "downPayer";
-    }
-
-    @StateNode(processor = "downPayerProcessor")
+    @StartNode(processor = "downPayerProcessor")
     public String downPayer(ResultStatus resultStatus) {
         switch (resultStatus) {
             case SUCCESS:
@@ -75,18 +68,30 @@ public class TransferFlow {
         }
     }
 
-    @StateNode
-    public String success() {
-        return "end";
-    }
-
-    @StateNode
-    public String fail() {
-        return "end";
+    @EndNode
+    public void success() {
     }
 
     @EndNode
-    public void end() {
+    public void fail() {
+    }
+
+    @TargetMapping
+    public String targetMapping(Transfer transfer) {
+        switch (transfer.getStatus()) {
+            case DOWN_PAYER:
+                return "downPayer";
+            case UP_PAYEE:
+                return "upPayee";
+            case RESTORE_PAYER:
+                return "restorePayer";
+            case SUCCESS:
+                return "success";
+            case FAIL:
+                return "fail";
+            default:
+                throw new RuntimeException("非法的转账状态");
+        }
     }
 
 }

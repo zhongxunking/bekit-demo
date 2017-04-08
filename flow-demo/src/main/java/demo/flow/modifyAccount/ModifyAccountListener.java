@@ -13,6 +13,7 @@ import demo.entity.ModifyAccount;
 import demo.enums.ModifyAccountStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import top.bekit.flow.annotation.listener.ListenFlowException;
 import top.bekit.flow.annotation.listener.ListenNodeDecide;
 import top.bekit.flow.annotation.listener.TheFlowListener;
@@ -25,6 +26,7 @@ import top.bekit.flow.engine.TargetContext;
 public class ModifyAccountListener {
     private static final Logger logger = LoggerFactory.getLogger(ModifyAccountListener.class);
 
+    @Autowired
     private ModifyAccountDao modifyAccountDao;
 
     @ListenNodeDecide

@@ -39,7 +39,7 @@ public class ModifyAccountTx {
         try {
             modifyAccountDao.save(modifyAccount);
         } catch (DuplicateKeyException e) {
-            modifyAccount = modifyAccountDao.findTransferBizNoAndTransferStatus(modifyAccount.getTransferBizNo(), modifyAccount.getTransferStatus());
+            modifyAccount = modifyAccountDao.findByTransferBizNoAndTransferStatus(modifyAccount.getTransferBizNo(), modifyAccount.getTransferStatus());
         }
         return modifyAccount;
     }

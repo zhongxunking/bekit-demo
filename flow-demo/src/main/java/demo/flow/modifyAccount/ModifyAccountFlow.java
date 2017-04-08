@@ -20,12 +20,7 @@ import top.bekit.flow.engine.TargetContext;
 @Flow
 public class ModifyAccountFlow {
 
-    @StartNode
-    public String start() {
-        return "modify";
-    }
-
-    @StateNode(processor = "modifyProcessor")
+    @StartNode(processor = "modifyProcessor")
     public String modify(ResultStatus resultStatus, TargetContext<ModifyAccount> targetContext) {
         ModifyAccount modifyAccount = targetContext.getTarget();
         switch (resultStatus) {
@@ -54,18 +49,28 @@ public class ModifyAccountFlow {
         }
     }
 
-    @StateNode
-    public String success() {
-        return "end";
-    }
-
-    @StateNode
-    public String fail() {
-        return "end";
+    @EndNode
+    public void success() {
     }
 
     @EndNode
-    public void end() {
+    public void fail() {
+    }
+
+    @TargetMapping
+    public String targetMapping(ModifyAccount modifyAccount) {
+        switch (modifyAccount.getStatus()) {
+            case MODIFY:
+                return "modify";
+            case GENERATE_ORDER_NO:
+                return "generateRefOrderNo";
+            case SUCCESS:
+                return "success";
+            case FAIL:
+                return "fail";
+            default:
+                throw new RuntimeException("非法的修改账务状态");
+        }
     }
 
 }

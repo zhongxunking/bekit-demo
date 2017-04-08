@@ -20,7 +20,7 @@ import top.bekit.flow.engine.TargetContext;
 /**
  *
  */
-@FlowTx(flow = "transfer")
+@FlowTx(flow = "transferFlow")
 public class TransferFlowTx {
 
     @Autowired

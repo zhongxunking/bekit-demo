@@ -11,8 +11,10 @@ package demo.flow.transfer.processor;
 import demo.entity.ModifyAccount;
 import demo.entity.Transfer;
 import demo.enums.Direction;
+import demo.enums.ModifyAccountStatus;
 import demo.enums.ModifyAccountType;
 import demo.enums.ResultStatus;
+import demo.utils.OID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,6 @@ import top.bekit.flow.annotation.processor.*;
 import top.bekit.flow.annotation.processor.Error;
 import top.bekit.flow.engine.TargetContext;
 
-import java.util.Random;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -30,7 +31,6 @@ import java.util.concurrent.TimeoutException;
 @Processor
 public class DownPayerProcessor {
     private static final Logger logger = LoggerFactory.getLogger(DownPayerProcessor.class);
-    private static final Random RANDOM = new Random();
 
     @Autowired
     private FlowEngine flowEngine;
@@ -54,17 +54,6 @@ public class DownPayerProcessor {
             default:
                 return ResultStatus.PROCESS;
         }
-
-//        switch (RANDOM.nextInt(4)) {
-//            case 0:
-//                return ResultStatus.SUCCESS;
-//            case 1:
-//                return ResultStatus.FAIL;
-//            case 2:
-//                return ResultStatus.PROCESS;
-//            default:
-//                throw new TimeoutException("模拟调用账务系统超时");
-//        }
     }
 
     private ModifyAccount buildModifyAccount(Transfer transfer) {
@@ -75,6 +64,8 @@ public class DownPayerProcessor {
         modifyAccount.setAccountNo(transfer.getPayerAccountNo());
         modifyAccount.setDirection(Direction.DOWN);
         modifyAccount.setAmount(transfer.getAmount());
+        modifyAccount.setStatus(ModifyAccountStatus.MODIFY);
+        modifyAccount.setRefOrderNo(OID.newId());
 
         return modifyAccount;
     }
