@@ -19,7 +19,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(indexes = {@Index(unique = true, columnList = "transferBizNo transferStatus")})
+@Table(indexes = {@Index(unique = true, columnList = "transferBizNo,transferStatus")})
 public class ModifyAccount {
 
     @Id

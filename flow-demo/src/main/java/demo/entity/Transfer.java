@@ -86,4 +86,9 @@ public class Transfer {
     public void setStatus(TransferStatus status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Transfer{id=%d,bizNo=%s,payerAccountNo=%s,payeeAccountNo=%s,amount=%d,status=%s}", id, bizNo, payerAccountNo, payeeAccountNo, amount, status);
+    }
 }
