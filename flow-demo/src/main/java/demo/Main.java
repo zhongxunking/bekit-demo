@@ -32,10 +32,14 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
         FlowEngine flowEngine = applicationContext.getBean(FlowEngine.class);
-        for (int i = 0; i < 10; i++) {
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
             Transfer transfer = flowEngine.insertTargetAndStart("transferFlow", buildTransfer(), null);
             logger.info("转账交易执行结果：{}", transfer);
         }
+        System.out.println("===================================");
+        System.out.println("执行时间：" + ((System.currentTimeMillis() - startTime) / 1000) + "s");
+        System.out.println("===================================");
     }
 
     private static Transfer buildTransfer() {

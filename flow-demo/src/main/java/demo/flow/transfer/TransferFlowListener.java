@@ -50,7 +50,7 @@ public class TransferFlowListener {
                 status = TransferStatus.FAIL;
                 break;
             default:
-                return;
+                throw new RuntimeException("监听到非法的节点被选择");
         }
         transfer.setStatus(status);
         transferDao.save(transfer);

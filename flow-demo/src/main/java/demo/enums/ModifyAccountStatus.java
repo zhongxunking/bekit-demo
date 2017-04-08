@@ -15,7 +15,7 @@ public enum ModifyAccountStatus {
 
     MODIFY,
 
-    GENERATE_ORDER_NO,
+    GENERATE_REF_ORDER_NO,
 
     SUCCESS,
 

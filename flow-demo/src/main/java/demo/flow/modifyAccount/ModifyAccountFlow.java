@@ -62,7 +62,7 @@ public class ModifyAccountFlow {
         switch (modifyAccount.getStatus()) {
             case MODIFY:
                 return "modify";
-            case GENERATE_ORDER_NO:
+            case GENERATE_REF_ORDER_NO:
                 return "generateRefOrderNo";
             case SUCCESS:
                 return "success";

@@ -37,8 +37,8 @@ public class ModifyAccountListener {
             case "modify":
                 status = ModifyAccountStatus.MODIFY;
                 break;
-            case "generateOrderNo":
-                status = ModifyAccountStatus.GENERATE_ORDER_NO;
+            case "generateRefOrderNo":
+                status = ModifyAccountStatus.GENERATE_REF_ORDER_NO;
                 break;
             case "success":
                 status = ModifyAccountStatus.SUCCESS;
@@ -47,7 +47,7 @@ public class ModifyAccountListener {
                 status = ModifyAccountStatus.FAIL;
                 break;
             default:
-                return;
+                throw new RuntimeException("监听到非法的节点被选择");
         }
         modifyAccount.setStatus(status);
         modifyAccountDao.save(modifyAccount);
