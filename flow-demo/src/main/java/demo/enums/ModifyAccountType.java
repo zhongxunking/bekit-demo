@@ -9,12 +9,17 @@
 package demo.enums;
 
 /**
- *
+ * 修改账类型
  */
 public enum ModifyAccountType {
-
+    /**
+     * 普通
+     */
     NORMAL,
 
+    /**
+     * 必须成功（恢复付款人资金时会用到）
+     */
     FORCE_SUCCESS,;
 
 }

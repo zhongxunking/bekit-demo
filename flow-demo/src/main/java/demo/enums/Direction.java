@@ -9,12 +9,17 @@
 package demo.enums;
 
 /**
- *
+ * 调账方向
  */
 public enum Direction {
-
+    /**
+     * 上账
+     */
     UP,
 
+    /**
+     * 下账
+     */
     DOWN,;
 
 }

@@ -16,7 +16,7 @@ import demo.enums.TransferStatus;
 import javax.persistence.*;
 
 /**
- *
+ * 修改账务记录
  */
 @Entity
 @Table(indexes = {@Index(unique = true, columnList = "transferBizNo,transferStatus")})
@@ -27,31 +27,39 @@ public class ModifyAccount {
     @Column
     private Long id;
 
+    // 转账交易流水号
     @Column(length = 20)
     private String transferBizNo;
 
+    // 转行交易状态
     @Column(length = 40)
     @Enumerated(EnumType.STRING)
     private TransferStatus transferStatus;
 
+    // 类型
     @Column(length = 40)
     @Enumerated(EnumType.STRING)
     private ModifyAccountType type;
 
+    // 账号
     @Column(length = 20)
     private String accountNo;
 
+    // 方向
     @Column(length = 40)
     @Enumerated(EnumType.STRING)
     private Direction direction;
 
+    // 金额
     @Column
     private Long amount;
 
+    // 状态
     @Column(length = 40)
     @Enumerated(EnumType.STRING)
     private ModifyAccountStatus status;
 
+    // 调用账务系统的订单号
     @Column(length = 40)
     private String refOrderNo;
 

@@ -9,7 +9,7 @@
 package demo.enums;
 
 /**
- *
+ * 给上层系统反悔的结果状态
  */
 public enum Status {
 

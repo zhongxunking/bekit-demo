@@ -9,16 +9,16 @@
 package demo.order;
 
 /**
- *
+ * 转交易order、
  */
 public class TransferOrder extends AbstractOrder {
-
+    // 订单号
     private String orderNo;
-
+    // 付款人账号
     private String payerAccountNo;
-
+    // 收款人账号
     private String payeeAccountNo;
-
+    // 金额
     private Long amount;
 
     public String getOrderNo() {

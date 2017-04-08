@@ -26,7 +26,7 @@ import top.bekit.flow.engine.TargetContext;
 import java.util.concurrent.TimeoutException;
 
 /**
- *
+ * 收款人上账处理器
  */
 @Processor
 public class UpPayeeProcessor {

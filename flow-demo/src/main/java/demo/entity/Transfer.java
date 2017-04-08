@@ -23,21 +23,27 @@ public class Transfer {
     @Column
     private Long id;
 
+    // 订单号
     @Column(length = 20, unique = true)
     private String orderNo;
 
+    // 流水号
     @Column(length = 20, unique = true)
     private String bizNo;
 
+    // 付款人账号
     @Column(length = 20)
     private String payerAccountNo;
 
+    // 收款人账号
     @Column(length = 20)
     private String payeeAccountNo;
 
+    // 金额
     @Column
     private Long amount;
 
+    // 状态
     @Column(length = 40)
     @Enumerated(EnumType.STRING)
     private TransferStatus status;

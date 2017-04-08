@@ -12,7 +12,7 @@ package demo.result;
 import demo.enums.Status;
 
 /**
- *
+ * 抽象result，定义公共的返回结果
  */
 public abstract class AbstractResult {
 

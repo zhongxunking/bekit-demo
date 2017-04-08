@@ -26,24 +26,26 @@ import top.bekit.flow.engine.TargetContext;
 import java.util.concurrent.TimeoutException;
 
 /**
- *
+ * 付款方下账处理器
  */
-@Processor
+@Processor      // @Processor是处理器注解，执行顺序：@Before——>@Execute——>@After——>@End，当发生异常时会执行@Error
 public class DownPayerProcessor {
     private static final Logger logger = LoggerFactory.getLogger(DownPayerProcessor.class);
 
     @Autowired
     private FlowEngine flowEngine;
 
-    @Before
+    @Before     // 可选
     public void before(TargetContext<Transfer> targetContext) {
+        // 为方便演示，只打印日志
         logger.info("执行DownPayerProcessor.before");
     }
 
-    @Execute
+    @Execute    // 必选（本方法的返回值会作为整个处理器的返回值）
     public ResultStatus execute(TargetContext<Transfer> targetContext) throws TimeoutException {
         logger.info("执行DownPayerProcessor.execute");
 
+        // 在这里调用修改账务子流程进行具体的修改用户的账
         ModifyAccount modifyAccount = buildModifyAccount(targetContext.getTarget());
         modifyAccount = flowEngine.insertTargetAndStart("modifyAccountFlow", modifyAccount, null);
         switch (modifyAccount.getStatus()) {
@@ -54,6 +56,21 @@ public class DownPayerProcessor {
             default:
                 return ResultStatus.PROCESS;
         }
+    }
+
+    @After      // 可选
+    public void after(TargetContext<Transfer> targetContext) {
+        logger.info("执行DownPayerProcessor.after");
+    }
+
+    @End        // 可选
+    public void end(TargetContext<Transfer> targetContext) {
+        logger.info("执行DownPayerProcessor.end");
+    }
+
+    @Error      // 可选
+    public void error(TargetContext<Transfer> targetContext) {
+        logger.error("执行DownPayerProcessor.error");
     }
 
     private ModifyAccount buildModifyAccount(Transfer transfer) {
@@ -70,18 +87,4 @@ public class DownPayerProcessor {
         return modifyAccount;
     }
 
-    @After
-    public void after(TargetContext<Transfer> targetContext) {
-        logger.info("执行DownPayerProcessor.after");
-    }
-
-    @End
-    public void end(TargetContext<Transfer> targetContext) {
-        logger.info("执行DownPayerProcessor.end");
-    }
-
-    @Error
-    public void error(TargetContext<Transfer> targetContext) {
-        logger.error("执行DownPayerProcessor.error");
-    }
 }

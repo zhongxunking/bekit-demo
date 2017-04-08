@@ -9,7 +9,7 @@
 package demo.order;
 
 /**
- *
+ * 抽象order，定义公共参数，虽然这里没有:)
  */
 public abstract class AbstractOrder {
 }

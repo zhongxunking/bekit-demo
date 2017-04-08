@@ -12,7 +12,7 @@ package demo.exception;
 import demo.enums.Status;
 
 /**
- *
+ * 自定义的异常
  */
 public class DemoException extends RuntimeException {
     private Status status;

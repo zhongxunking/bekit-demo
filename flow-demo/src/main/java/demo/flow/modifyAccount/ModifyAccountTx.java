@@ -18,7 +18,7 @@ import top.bekit.flow.annotation.transaction.LockTarget;
 import top.bekit.flow.engine.TargetContext;
 
 /**
- *
+ * 修改账务流程事务
  */
 @FlowTx(flow = "modifyAccountFlow")
 public class ModifyAccountTx {

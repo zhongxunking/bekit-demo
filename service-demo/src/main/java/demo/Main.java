@@ -21,7 +21,10 @@ import top.bekit.service.ServiceEngine;
 import java.util.Random;
 
 /**
- *
+ * 服务引擎使用展示
+ * （请在application.properties修改数据库配置信息）
+ * <p>
+ * 本demo展示使用服务引擎执行转账交易服务
  */
 @SpringBootApplication
 public class Main {
@@ -30,8 +33,9 @@ public class Main {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
+        // 服务引擎从spring容器中获取（可以通过@Autowired获取）
         ServiceEngine serviceEngine = applicationContext.getBean(ServiceEngine.class);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1; i++) {
             TransferResult result = serviceEngine.execute("transferService", buildTransferOrder(), new TransferResult());
             logger.info("服务执行结果：{}", result);
         }

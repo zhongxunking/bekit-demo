@@ -9,7 +9,7 @@
 package demo.enums;
 
 /**
- *
+ * 结果状态
  */
 public enum ResultStatus {
 

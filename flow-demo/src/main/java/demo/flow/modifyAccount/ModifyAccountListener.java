@@ -20,7 +20,7 @@ import top.bekit.flow.annotation.listener.TheFlowListener;
 import top.bekit.flow.engine.TargetContext;
 
 /**
- *
+ * 修改账务流程监听器
  */
 @TheFlowListener(flow = "modifyAccountFlow")
 public class ModifyAccountListener {

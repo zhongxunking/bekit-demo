@@ -30,6 +30,7 @@ public class ModifyAccountFlow {
                 if (modifyAccount.getType() == ModifyAccountType.NORMAL) {
                     return "fail";
                 } else {
+                    // 如果是必须成功，则重新修改调用账务的订单号，重新执行（因为账务也实现的幂等性，必须的修改订单号，账务系统才会再次尝试修改用户的账）
                     return "generateRefOrderNo";
                 }
             case PROCESS:
@@ -39,6 +40,8 @@ public class ModifyAccountFlow {
         }
     }
 
+    // 注意：@WaitNode是等待类型节点
+    // 等待节点特征：除非流程引擎执行的第一个节点是本节点，否则流程引擎在执行到这类节点时会自动终止流程
     @WaitNode(processor = "generateRefOrderNoProcessor")
     public String generateRefOrderNo(ResultStatus resultStatus) {
         switch (resultStatus) {

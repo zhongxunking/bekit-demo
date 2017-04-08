@@ -20,7 +20,7 @@ import java.util.Random;
 import java.util.concurrent.TimeoutException;
 
 /**
- *
+ * 修改用户账处理器
  */
 @Processor
 public class ModifyProcessor {
@@ -36,6 +36,7 @@ public class ModifyProcessor {
     public ResultStatus execute(TargetContext<ModifyAccount> targetContext) throws TimeoutException {
         logger.info("执行ModifyProcessor.execute");
 
+        // 这里以随机数模拟调用账务系统的结果
         switch (RANDOM.nextInt(4)) {
             case 0:
                 return ResultStatus.SUCCESS;
@@ -44,7 +45,6 @@ public class ModifyProcessor {
             case 2:
                 return ResultStatus.PROCESS;
             default:
-//                return ResultStatus.PROCESS;
                 throw new TimeoutException("模拟调用账务系统超时");
         }
     }

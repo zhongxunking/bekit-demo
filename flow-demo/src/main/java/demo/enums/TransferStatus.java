@@ -9,18 +9,32 @@
 package demo.enums;
 
 /**
- *
+ * 转账交易状态
  */
 public enum TransferStatus {
-
+    /**
+     * 付款人下账
+     */
     DOWN_PAYER,
 
+    /**
+     * 收款人上账
+     */
     UP_PAYEE,
 
+    /**
+     * 恢复付款人资金
+     */
     RESTORE_PAYER,
 
+    /**
+     * 成功
+     */
     SUCCESS,
 
+    /**
+     * 失败
+     */
     FAIL,;
 
 }

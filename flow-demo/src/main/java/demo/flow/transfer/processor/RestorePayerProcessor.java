@@ -26,7 +26,7 @@ import top.bekit.flow.engine.TargetContext;
 import java.util.concurrent.TimeoutException;
 
 /**
- *
+ * 恢复付款人资金处理器
  */
 @Processor
 public class RestorePayerProcessor {
@@ -60,7 +60,7 @@ public class RestorePayerProcessor {
         ModifyAccount modifyAccount = new ModifyAccount();
         modifyAccount.setTransferBizNo(transfer.getBizNo());
         modifyAccount.setTransferStatus(transfer.getStatus());
-        modifyAccount.setType(ModifyAccountType.FORCE_SUCCESS);
+        modifyAccount.setType(ModifyAccountType.FORCE_SUCCESS);     // 必须成功
         modifyAccount.setAccountNo(transfer.getPayerAccountNo());
         modifyAccount.setDirection(Direction.UP);
         modifyAccount.setAmount(transfer.getAmount());

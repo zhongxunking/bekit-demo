@@ -9,16 +9,27 @@
 package demo.enums;
 
 /**
- *
+ * 修改账状态
  */
 public enum ModifyAccountStatus {
-
+    /**
+     * 修改
+     */
     MODIFY,
 
+    /**
+     * 生成调用账务系统的订单号
+     */
     GENERATE_REF_ORDER_NO,
 
+    /**
+     * 成功
+     */
     SUCCESS,
 
+    /**
+     * 失败
+     */
     FAIL,;
 
 }

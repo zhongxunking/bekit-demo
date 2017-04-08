@@ -9,7 +9,7 @@
 package demo.result;
 
 /**
- *
+ * 转账交易result
  */
 public class TransferResult extends AbstractResult {
 

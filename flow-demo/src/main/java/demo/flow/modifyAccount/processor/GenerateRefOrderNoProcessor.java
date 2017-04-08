@@ -22,7 +22,7 @@ import top.bekit.flow.engine.TargetContext;
 import java.util.concurrent.TimeoutException;
 
 /**
- *
+ * 生成调用账务系统的订单号处理器
  */
 @Processor
 public class GenerateRefOrderNoProcessor {
