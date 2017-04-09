@@ -25,6 +25,8 @@ import java.util.Random;
  * （请在application.properties修改数据库配置信息）
  * <p>
  * 本demo展示使用服务引擎执行转账交易服务
+ *
+ * 重点看：TransferService、ProcessResultServiceListener、OrderCheckServiceListener
  */
 @SpringBootApplication
 public class Main {
