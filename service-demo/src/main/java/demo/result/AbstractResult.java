@@ -15,9 +15,9 @@ import demo.enums.Status;
  * 抽象result，定义公共的返回结果
  */
 public abstract class AbstractResult {
-
+    // 结果状态
     private Status status;
-
+    // 结果描述
     private String description;
 
     public Status getStatus() {

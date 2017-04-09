@@ -44,7 +44,7 @@ public class ProcessResultServiceListener {
 
     @Listen
     public void listenServiceExceptionEvent(ServiceExceptionEvent event) {  // 监听服务异常事件
-        // 可以根据异常类型对result设值，比如：如果是自己跑的异常就可以根据异常里的值对result设值，如果不是自己抛的异常，则返回给上层系统处理中，因为这时候你自己也不知道复制性结果是什么
+        // 可以根据异常类型对result设值，比如：如果是自己抛的异常就可以根据异常里的值对result设值，如果不是自己抛的异常，则返回给上层系统处理中，因为这时候你自己也不知道执行结果是什么
         ServiceContext<AbstractOrder, AbstractResult> serviceContext = event.getServiceContext();
         AbstractResult result = serviceContext.getResult();
 
