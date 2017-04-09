@@ -23,7 +23,7 @@ import top.bekit.event.EventPublisher;
 public class Main {
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
-        // 事件发布器可以直接从spring容器中获取，这里为了方便展示，直接调用spring容器获取，大家使用的时候可以通过@Autowired注入方式得到
+        // 时间发布器从spring容器获取（可以通过@Autowired获取）
         EventPublisher eventPublisher = applicationContext.getBean(EventPublisher.class);
         // 发布添加用户事件，对应的监听器会受到事件
         eventPublisher.publish(new AddUserEvent("123", "张三"));
