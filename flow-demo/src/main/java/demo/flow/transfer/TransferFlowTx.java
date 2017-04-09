@@ -28,7 +28,7 @@ public class TransferFlowTx {
 
     @LockTarget     // 锁目标对象
     public Transfer lockTarget(TargetContext<Transfer> targetContext) {
-        // 在并发情况下需要用锁来控制并发，你需要在这里实现具体的代码
+        // 在并发情况下需要用锁来控制并发，你需要在这里实现具体锁住目标对象的代码
         // 这里采用数据库行级悲观锁的形式锁住目标对象
         Transfer transfer = targetContext.getTarget();
         transfer = transferDao.findLockByBizNo(transfer.getBizNo());
