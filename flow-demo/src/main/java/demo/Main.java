@@ -26,8 +26,9 @@ import java.util.Random;
  * <p>
  * （为方便展示，我们设计一个简单的转账交易场景：A转账给B（第一步：付款人A下帐，第二步：收款人B上账），同时本系统是交易系统，
  * 而用户的帐是记在账务系统里的，也就是说上面两步是交易系统通过远程调用账务系统完成的，也就是会出现调用超时情况；
- * 同时假设每一步操作账务系统都可能返回成功、失败、处理中这三种情况。
+ * 同时假设每一步操作账务系统都可能返回成功、失败、处理中这三种情况。如果第一步成功，而第二步失败了，那么就需要将付款人的账恢复回去，而且必须得成功。
  * 本示例展示通过使用流程引擎控制每一步的执行，最后达到业务最终结果（要么全成功，要么全失败————数据一致性））
+ * <p>
  * <p>
  * （题外话：有的账务系统本身就提供转账功能，可以直接通过数据库事务保证数据一致性，但是像一些复合型转账，账务系统就不能再提供了，
  * 因为账务系统是个底层核心系统，不应该夹杂这样的业务属性，也就是说像复合型转账这类业务还是需要一个上层系统来保证数据的最终一致性）
@@ -58,10 +59,11 @@ public class Main {
 
     private static Transfer buildTransfer() {
         Transfer transfer = new Transfer();
+        transfer.setOrderNo(OID.newId());
         transfer.setBizNo(OID.newId());
-        transfer.setPayerAccountNo(OID.newId());
-        transfer.setPayeeAccountNo(OID.newId());
-        transfer.setAmount((long) RANDOM.nextInt(10000));
+        transfer.setPayerAccountNo(OID.newId());    // 为了方便演示，直接生成账号
+        transfer.setPayeeAccountNo(OID.newId());    // 为了方便演示，直接生成账号
+        transfer.setAmount((long) RANDOM.nextInt(10000));   // 金额随机生成
         transfer.setStatus(TransferStatus.DOWN_PAYER);
 
         return transfer;

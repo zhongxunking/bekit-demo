@@ -25,7 +25,9 @@ import java.util.Random;
  * （请在application.properties修改数据库配置信息）
  * <p>
  * 本demo展示使用服务引擎执行转账交易服务
- *
+ * 服务引擎可以不用通过流程引擎来执行业务，如果交易、订单类场景建议结合流程引擎一起使用，
+ * 如果服务引擎和流程引擎一起使用，建议服务引擎不用开启事务，事务由流程引擎控制
+ * <p>
  * 重点看：TransferService、ProcessResultServiceListener、OrderCheckServiceListener
  */
 @SpringBootApplication

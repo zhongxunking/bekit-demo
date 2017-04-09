@@ -17,6 +17,7 @@ import top.bekit.event.EventPublisher;
 
 /**
  * 事件总线使用演示
+ * 重点看：UserListener1、UserListener2
  */
 @SpringBootApplication
 public class Main {
