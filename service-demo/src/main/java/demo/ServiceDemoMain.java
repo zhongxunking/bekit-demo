@@ -31,12 +31,12 @@ import java.util.Random;
  * 重点看：TransferService、ProcessResultServiceListener、OrderCheckServiceListener
  */
 @SpringBootApplication
-public class Main {
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+public class ServiceDemoMain {
+    private static final Logger logger = LoggerFactory.getLogger(FlowDemoMain.class);
     private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
+        ApplicationContext applicationContext = SpringApplication.run(FlowDemoMain.class, args);
         // 服务引擎从spring容器中获取（可以通过@Autowired获取）
         ServiceEngine serviceEngine = applicationContext.getBean(ServiceEngine.class);
         for (int i = 0; i < 1; i++) {

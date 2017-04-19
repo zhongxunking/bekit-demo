@@ -39,12 +39,12 @@ import java.util.Random;
  * 重点看：TransferFlow、TransferFlowListener、TransferFlowTx、DownPayerProcessor
  */
 @SpringBootApplication
-public class Main {
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+public class FlowDemoMain {
+    private static final Logger logger = LoggerFactory.getLogger(FlowDemoMain.class);
     private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
+        ApplicationContext applicationContext = SpringApplication.run(FlowDemoMain.class, args);
         // 流程引擎从spring容器获取（可以通过@Autowired获取）
         FlowEngine flowEngine = applicationContext.getBean(FlowEngine.class);
         for (int i = 0; i < 1; i++) {

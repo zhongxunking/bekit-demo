@@ -20,9 +20,9 @@ import top.bekit.event.EventPublisher;
  * 重点看：UserListener1、UserListener2
  */
 @SpringBootApplication
-public class Main {
+public class EventDemoMain {
     public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
+        ApplicationContext applicationContext = SpringApplication.run(EventDemoMain.class, args);
         // 时间发布器从spring容器获取（可以通过@Autowired获取）
         EventPublisher eventPublisher = applicationContext.getBean(EventPublisher.class);
         // 发布添加用户事件，对应的监听器会受到事件
