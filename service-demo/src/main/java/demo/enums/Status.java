@@ -1,5 +1,5 @@
 /* 
- * 作者：钟勋 (e-mail:zhongxun@163.com)
+ * 作者：钟勋 (e-mail:zhongxunking@163.com)
  */
 
 /*
