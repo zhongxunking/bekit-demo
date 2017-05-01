@@ -40,7 +40,7 @@ public class ServiceDemoMain {
         // 服务引擎从spring容器中获取（可以通过@Autowired获取）
         ServiceEngine serviceEngine = applicationContext.getBean(ServiceEngine.class);
         for (int i = 0; i < 1; i++) {
-            TransferResult result = serviceEngine.execute("transferService", buildTransferOrder(), new TransferResult());
+            TransferResult result = serviceEngine.execute("transferService", buildTransferOrder());
             logger.info("服务执行结果：{}", result);
         }
     }
