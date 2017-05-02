@@ -11,7 +11,6 @@ package demo.flow.modifyAccount;
 import demo.dao.ModifyAccountDao;
 import demo.entity.ModifyAccount;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import top.bekit.flow.annotation.transaction.FlowTx;
 import top.bekit.flow.annotation.transaction.InsertTarget;
 import top.bekit.flow.annotation.transaction.LockTarget;
@@ -36,11 +35,14 @@ public class ModifyAccountTx {
     @InsertTarget
     public ModifyAccount insertTarget(TargetContext<ModifyAccount> targetContext) {
         ModifyAccount modifyAccount = targetContext.getTarget();
-        try {
+
+        ModifyAccount savedModifyAccount = modifyAccountDao.findLockByTransferBizNoAndTransferStatus(modifyAccount.getTransferBizNo(), modifyAccount.getTransferStatus());
+        if (savedModifyAccount == null) {
             modifyAccountDao.save(modifyAccount);
-        } catch (DuplicateKeyException e) {
-            modifyAccount = modifyAccountDao.findByTransferBizNoAndTransferStatus(modifyAccount.getTransferBizNo(), modifyAccount.getTransferStatus());
+        } else {
+            modifyAccount = savedModifyAccount;
         }
+
         return modifyAccount;
     }
 
