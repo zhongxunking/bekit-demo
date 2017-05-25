@@ -34,7 +34,7 @@ public class TransferFlow {
         }
     }
 
-    // 收款人上账节点  @StateNode是状态节点表示本节点执行完后需要提交事务
+    // 收款人上账节点  @StateNode是状态节点，表示在本节点执行前会先提交事务然后开启新事务并调用流程事务锁住目标对象。
     @StateNode(processor = "upPayeeProcessor")
     public String upPayee(ResultStatus resultStatus) {
         switch (resultStatus) {

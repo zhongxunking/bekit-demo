@@ -41,7 +41,7 @@ public class ModifyAccountFlow {
     }
 
     // 注意：@WaitNode是等待类型节点
-    // 等待节点特征：除非流程引擎执行的第一个节点是本节点，否则流程引擎在执行到这类节点时会自动终止流程
+    // 等待节点特征：除非流程引擎执行的第一个节点是本节点，否则流程引擎在执行到这类节点时会自动中断流程
     @WaitNode(processor = "generateRefOrderNoProcessor")
     public String generateRefOrderNo(ResultStatus resultStatus) {
         switch (resultStatus) {
