@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.bekit.flow.annotation.listener.ListenFlowException;
-import top.bekit.flow.annotation.listener.ListenNodeDecide;
+import top.bekit.flow.annotation.listener.ListenNodeDecided;
 import top.bekit.flow.annotation.listener.TheFlowListener;
 import top.bekit.flow.engine.TargetContext;
 
@@ -29,7 +29,7 @@ public class TransferFlowListener {
     @Autowired
     private TransferDao transferDao;
 
-    @ListenNodeDecide   // 监听节点选择事件（主要作用就是用来修改目标对象的状态的）
+    @ListenNodeDecided   // 监听节点选择事件（主要作用就是用来修改目标对象的状态的）
     public void listenNodeDecide(String node, TargetContext<Transfer> targetContext) {  // 入参node表示被选择的节点，targetContext是目标上下文
         // 根据被选择的节点修改目标对象到对应的状态，
         Transfer transfer = targetContext.getTarget();

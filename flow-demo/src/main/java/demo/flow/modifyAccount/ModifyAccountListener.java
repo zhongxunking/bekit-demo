@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.bekit.flow.annotation.listener.ListenFlowException;
-import top.bekit.flow.annotation.listener.ListenNodeDecide;
+import top.bekit.flow.annotation.listener.ListenNodeDecided;
 import top.bekit.flow.annotation.listener.TheFlowListener;
 import top.bekit.flow.engine.TargetContext;
 
@@ -29,7 +29,7 @@ public class ModifyAccountListener {
     @Autowired
     private ModifyAccountDao modifyAccountDao;
 
-    @ListenNodeDecide
+    @ListenNodeDecided
     public void listenNodeDecide(String node, TargetContext<ModifyAccount> targetContext) {
         ModifyAccount modifyAccount = targetContext.getTarget();
         ModifyAccountStatus status;
