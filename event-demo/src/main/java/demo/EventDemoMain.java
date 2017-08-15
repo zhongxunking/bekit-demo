@@ -10,10 +10,10 @@ package demo;
 
 import demo.event.AddUserEvent;
 import demo.event.DeleteUserEvent;
+import org.bekit.event.EventPublisher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import top.bekit.event.EventPublisher;
 
 /**
  * 事件总线使用演示

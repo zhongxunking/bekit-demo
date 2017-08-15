@@ -18,7 +18,7 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>top.bekit</groupId>
+            <groupId>org.bekit</groupId>
             <artifactId>service</artifactId>
         </dependency>
         <dependency>
