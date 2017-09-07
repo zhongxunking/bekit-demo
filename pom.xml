@@ -31,17 +31,17 @@
             <dependency>
                 <groupId>org.bekit</groupId>
                 <artifactId>event</artifactId>
-                <version>1.2.0.RELEASE</version>
+                <version>1.2.1.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>org.bekit</groupId>
                 <artifactId>flow</artifactId>
-                <version>1.2.0.RELEASE</version>
+                <version>1.2.1.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>org.bekit</groupId>
                 <artifactId>service</artifactId>
-                <version>1.2.0.RELEASE</version>
+                <version>1.2.1.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
