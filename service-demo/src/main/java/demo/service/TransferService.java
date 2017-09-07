@@ -17,6 +17,7 @@ import demo.result.TransferResult;
 import demo.utils.OID;
 import org.bekit.flow.FlowEngine;
 import org.bekit.service.annotation.service.Service;
+import org.bekit.service.annotation.service.ServiceAfter;
 import org.bekit.service.annotation.service.ServiceCheck;
 import org.bekit.service.annotation.service.ServiceExecute;
 import org.bekit.service.engine.ServiceContext;
@@ -52,6 +53,11 @@ public class TransferService {
             default:
                 throw new DemoException(Status.PROCESS, "处理中");
         }
+    }
+
+    @ServiceAfter // 服务后置处理（一般情况下用不到）
+    public void serviceAfter(ServiceContext<TransferOrder, TransferResult> serviceContext) {
+        logger.info("执行TransferService.serviceAfter");
     }
 
     private Transfer buildTransfer(TransferOrder order) {
