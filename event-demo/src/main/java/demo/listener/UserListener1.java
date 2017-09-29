@@ -11,7 +11,7 @@ package demo.listener;
 import demo.event.AddUserEvent;
 import demo.event.DeleteUserEvent;
 import org.bekit.event.annotation.BizListener;
-import org.bekit.event.annotation.listener.Listen;
+import org.bekit.event.annotation.Listen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
