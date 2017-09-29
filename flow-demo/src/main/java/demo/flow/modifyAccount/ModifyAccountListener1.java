@@ -22,15 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * 修改账务流程监听器
  */
-@TheFlowListener(flow = "modifyAccountFlow")
-public class ModifyAccountListener {
-    private static final Logger logger = LoggerFactory.getLogger(ModifyAccountListener.class);
+@TheFlowListener(flow = "modifyAccountFlow", priority = 1)
+public class ModifyAccountListener1 {
+    private static final Logger logger = LoggerFactory.getLogger(ModifyAccountListener1.class);
 
     @Autowired
     private ModifyAccountDao modifyAccountDao;
 
     @ListenNodeDecided
     public void listenNodeDecide(String node, TargetContext<ModifyAccount> targetContext) {
+        logger.info("ModifyAccountListener1.listenNodeDecide");
         ModifyAccount modifyAccount = targetContext.getTarget();
         ModifyAccountStatus status;
         switch (node) {
@@ -53,8 +54,9 @@ public class ModifyAccountListener {
         modifyAccountDao.save(modifyAccount);
     }
 
-    @ListenFlowException
+    @ListenFlowException(priorityAsc = false)
     public void listenFlowException(Throwable throwable, TargetContext<ModifyAccount> targetContext) {
+        logger.info("ModifyAccountListener1.listenFlowException");
         logger.error("账户变动过程中发生异常：", throwable);
     }
 
