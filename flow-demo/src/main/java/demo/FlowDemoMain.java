@@ -47,13 +47,11 @@ public class FlowDemoMain {
         ApplicationContext applicationContext = SpringApplication.run(FlowDemoMain.class, args);
         // 流程引擎从spring容器获取（可以通过@Autowired获取）
         FlowEngine flowEngine = applicationContext.getBean(FlowEngine.class);
-        for (int i = 0; i < 1; i++) {
-            try {
-                Transfer transfer = flowEngine.insertTargetAndStart("transferFlow", buildTransfer(), null);
-                logger.info("转账交易执行结果：{}", transfer);
-            } catch (Throwable e) {
-                logger.error("转账交易发生异常：{}", e.getMessage());
-            }
+        try {
+            Transfer transfer = flowEngine.insertTargetAndStart("transferFlow", buildTransfer(), null);
+            logger.info("转账交易执行结果：{}", transfer);
+        } catch (Throwable e) {
+            logger.error("转账交易发生异常：{}", e.getMessage());
         }
     }
 

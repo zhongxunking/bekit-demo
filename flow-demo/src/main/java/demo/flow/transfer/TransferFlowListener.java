@@ -30,7 +30,7 @@ public class TransferFlowListener {
     private TransferDao transferDao;
 
     @ListenNodeDecided   // 监听节点选择事件（主要作用就是用来修改目标对象的状态的）
-    public void listenNodeDecide(String node, TargetContext<Transfer> targetContext) {  // 入参node表示被选择的节点，targetContext是目标上下文
+    public void listenNodeDecided(String node, TargetContext<Transfer> targetContext) {  // 入参node表示被选择的节点，targetContext是目标上下文
         // 根据被选择的节点修改目标对象到对应的状态，
         Transfer transfer = targetContext.getTarget();
         TransferStatus status;

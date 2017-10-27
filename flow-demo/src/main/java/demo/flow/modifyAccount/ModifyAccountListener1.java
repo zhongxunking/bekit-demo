@@ -30,7 +30,7 @@ public class ModifyAccountListener1 {
     private ModifyAccountDao modifyAccountDao;
 
     @ListenNodeDecided
-    public void listenNodeDecide(String node, TargetContext<ModifyAccount> targetContext) {
+    public void listenNodeDecided(String node, TargetContext<ModifyAccount> targetContext) {
         logger.info("ModifyAccountListener1.listenNodeDecide");
         ModifyAccount modifyAccount = targetContext.getTarget();
         ModifyAccountStatus status;
@@ -57,7 +57,7 @@ public class ModifyAccountListener1 {
     @ListenFlowException(priorityAsc = false)
     public void listenFlowException(Throwable throwable, TargetContext<ModifyAccount> targetContext) {
         logger.info("ModifyAccountListener1.listenFlowException");
-        logger.error("账户变动过程中发生异常：", throwable);
+        logger.error("账户变动过程中发生异常：{}", throwable.getMessage());
     }
 
 }

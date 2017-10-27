@@ -30,7 +30,7 @@ public class ModifyAccountListener2 {
     private ModifyAccountDao modifyAccountDao;
 
     @ListenNodeDecided
-    public void listenNodeDecide(String node, TargetContext<ModifyAccount> targetContext) {
+    public void listenNodeDecided(String node, TargetContext<ModifyAccount> targetContext) {
         logger.info("ModifyAccountListener2.listenNodeDecide");
     }
 
