@@ -17,7 +17,6 @@ import demo.enums.ResultStatus;
 import demo.utils.OID;
 import org.bekit.flow.FlowEngine;
 import org.bekit.flow.annotation.processor.*;
-import org.bekit.flow.annotation.processor.Error;
 import org.bekit.flow.engine.TargetContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +34,13 @@ public class DownPayerProcessor {
     @Autowired
     private FlowEngine flowEngine;
 
-    @Before     // 可选
+    @ProcessorBefore     // 可选
     public void before(TargetContext<Transfer> targetContext) {
         // 为方便演示，只打印日志
         logger.info("执行DownPayerProcessor.before");
     }
 
-    @Execute    // 必选（本方法的返回值会作为整个处理器的返回值）
+    @ProcessorExecute    // 必选（本方法的返回值会作为整个处理器的返回值）
     public ResultStatus execute(TargetContext<Transfer> targetContext) throws TimeoutException {
         logger.info("执行DownPayerProcessor.execute");
 
@@ -58,17 +57,17 @@ public class DownPayerProcessor {
         }
     }
 
-    @After      // 可选
+    @ProcessorAfter      // 可选
     public void after(TargetContext<Transfer> targetContext) {
         logger.info("执行DownPayerProcessor.after");
     }
 
-    @End        // 可选
+    @ProcessorEnd        // 可选
     public void end(TargetContext<Transfer> targetContext) {
         logger.info("执行DownPayerProcessor.end");
     }
 
-    @Error      // 可选
+    @ProcessorError      // 可选
     public void error(TargetContext<Transfer> targetContext) {
         logger.error("执行DownPayerProcessor.error");
     }

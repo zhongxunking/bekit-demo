@@ -13,7 +13,6 @@ import demo.entity.ModifyAccount;
 import demo.enums.ResultStatus;
 import demo.utils.OID;
 import org.bekit.flow.annotation.processor.*;
-import org.bekit.flow.annotation.processor.Error;
 import org.bekit.flow.engine.TargetContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +30,12 @@ public class GenerateRefOrderNoProcessor {
     @Autowired
     private ModifyAccountDao modifyAccountDao;
 
-    @Before
+    @ProcessorBefore
     public void before(TargetContext<ModifyAccount> targetContext) {
         logger.info("执行GenerateRefOrderNoProcessor.before");
     }
 
-    @Execute
+    @ProcessorExecute
     public ResultStatus execute(TargetContext<ModifyAccount> targetContext) throws TimeoutException {
         logger.info("执行GenerateRefOrderNoProcessor.execute");
 
@@ -47,17 +46,17 @@ public class GenerateRefOrderNoProcessor {
         return ResultStatus.SUCCESS;
     }
 
-    @After
+    @ProcessorAfter
     public void after(TargetContext<ModifyAccount> targetContext) {
         logger.info("执行GenerateRefOrderNoProcessor.after");
     }
 
-    @End
+    @ProcessorEnd
     public void end(TargetContext<ModifyAccount> targetContext) {
         logger.info("执行GenerateRefOrderNoProcessor.end");
     }
 
-    @Error
+    @ProcessorError
     public void error(TargetContext<ModifyAccount> targetContext) {
         logger.error("执行GenerateRefOrderNoProcessor.error");
     }

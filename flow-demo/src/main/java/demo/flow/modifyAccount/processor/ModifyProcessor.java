@@ -11,7 +11,6 @@ package demo.flow.modifyAccount.processor;
 import demo.entity.ModifyAccount;
 import demo.enums.ResultStatus;
 import org.bekit.flow.annotation.processor.*;
-import org.bekit.flow.annotation.processor.Error;
 import org.bekit.flow.engine.TargetContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +26,12 @@ public class ModifyProcessor {
     private static final Logger logger = LoggerFactory.getLogger(ModifyProcessor.class);
     private static final Random RANDOM = new Random();
 
-    @Before
+    @ProcessorBefore
     public void before(TargetContext<ModifyAccount> targetContext) {
         logger.info("执行ModifyProcessor.before");
     }
 
-    @Execute
+    @ProcessorExecute
     public ResultStatus execute(TargetContext<ModifyAccount> targetContext) throws TimeoutException {
         logger.info("执行ModifyProcessor.execute");
 
@@ -52,17 +51,17 @@ public class ModifyProcessor {
         }
     }
 
-    @After
+    @ProcessorAfter
     public void after(TargetContext<ModifyAccount> targetContext) {
         logger.info("执行ModifyProcessor.after");
     }
 
-    @End
+    @ProcessorEnd
     public void end(TargetContext<ModifyAccount> targetContext) {
         logger.info("执行ModifyProcessor.end");
     }
 
-    @Error
+    @ProcessorError
     public void error(TargetContext<ModifyAccount> targetContext) {
         logger.error("执行ModifyProcessor.error");
     }

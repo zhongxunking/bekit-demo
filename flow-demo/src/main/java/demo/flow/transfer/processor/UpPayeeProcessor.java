@@ -17,7 +17,6 @@ import demo.enums.ResultStatus;
 import demo.utils.OID;
 import org.bekit.flow.FlowEngine;
 import org.bekit.flow.annotation.processor.*;
-import org.bekit.flow.annotation.processor.Error;
 import org.bekit.flow.engine.TargetContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +34,12 @@ public class UpPayeeProcessor {
     @Autowired
     private FlowEngine flowEngine;
 
-    @Before
+    @ProcessorBefore
     public void before(TargetContext<Transfer> targetContext) {
         logger.info("执行UpPayeeProcessor.before");
     }
 
-    @Execute
+    @ProcessorExecute
     public ResultStatus execute(TargetContext<Transfer> targetContext) throws TimeoutException {
         logger.info("执行UpPayeeProcessor.execute");
 
@@ -70,17 +69,17 @@ public class UpPayeeProcessor {
         return modifyAccount;
     }
 
-    @After
+    @ProcessorAfter
     public void after(TargetContext<Transfer> targetContext) {
         logger.info("执行UpPayeeProcessor.after");
     }
 
-    @End
+    @ProcessorEnd
     public void end(TargetContext<Transfer> targetContext) {
         logger.info("执行UpPayeeProcessor.end");
     }
 
-    @Error
+    @ProcessorError
     public void error(TargetContext<Transfer> targetContext) {
         logger.error("执行UpPayeeProcessor.error");
     }

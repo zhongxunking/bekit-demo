@@ -47,7 +47,7 @@ public class ProcessResultServiceListener {
         ServiceContext<AbstractOrder, AbstractResult> serviceContext = event.getServiceContext();
         AbstractResult result = serviceContext.getResult();
 
-        Throwable throwable = event.getTargetException();
+        Throwable throwable = event.getThrowable();
         if (throwable instanceof DemoException) {
             DemoException demoException = (DemoException) throwable;
             result.setStatus(demoException.getStatus());
