@@ -18,7 +18,7 @@ import demo.utils.OID;
 import org.bekit.flow.FlowEngine;
 import org.bekit.service.annotation.service.Service;
 import org.bekit.service.annotation.service.ServiceAfter;
-import org.bekit.service.annotation.service.ServiceCheck;
+import org.bekit.service.annotation.service.ServiceBefore;
 import org.bekit.service.annotation.service.ServiceExecute;
 import org.bekit.service.engine.ServiceContext;
 import org.slf4j.Logger;
@@ -35,14 +35,14 @@ public class TransferService {
     @Autowired
     private FlowEngine flowEngine;
 
-    @ServiceCheck   // 服务校验（可以进行业务参数检查，比如校验账号存不存）
-    public void serviceCheck(ServiceContext<TransferOrder, TransferResult> serviceContext) {
+    @ServiceBefore   // 服务前置处理（可以进行业务参数检查，比如校验账号存不存）
+    public void before(ServiceContext<TransferOrder, TransferResult> serviceContext) {
         // 本方法执行时不会有事务开启
         logger.info("执行TransferService.serviceCheck");
     }
 
     @ServiceExecute     // 服务执行，真正开始执行业务（如果@Service的enableTx属性为true，则会开启事务）
-    public void serviceExecute(ServiceContext<TransferOrder, TransferResult> serviceContext) {
+    public void execute(ServiceContext<TransferOrder, TransferResult> serviceContext) {
         Transfer transfer = flowEngine.insertTargetAndStart("transferFlow", buildTransfer(serviceContext.getOrder()), null);
         switch (transfer.getStatus()) {
             case SUCCESS:
@@ -56,7 +56,7 @@ public class TransferService {
     }
 
     @ServiceAfter // 服务后置处理（一般情况下用不到）
-    public void serviceAfter(ServiceContext<TransferOrder, TransferResult> serviceContext) {
+    public void after(ServiceContext<TransferOrder, TransferResult> serviceContext) {
         logger.info("执行TransferService.serviceAfter");
     }
 
