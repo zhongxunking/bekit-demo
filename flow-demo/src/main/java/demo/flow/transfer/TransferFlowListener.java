@@ -11,10 +11,11 @@ package demo.flow.transfer;
 import demo.dao.TransferDao;
 import demo.entity.Transfer;
 import demo.enums.TransferStatus;
+import org.bekit.common.util.EnumUtils;
+import org.bekit.flow.annotation.listener.ListenDecidedStateNode;
 import org.bekit.flow.annotation.listener.ListenFlowException;
-import org.bekit.flow.annotation.listener.ListenNodeDecided;
 import org.bekit.flow.annotation.listener.TheFlowListener;
-import org.bekit.flow.engine.TargetContext;
+import org.bekit.flow.engine.FlowContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,36 +30,17 @@ public class TransferFlowListener {
     @Autowired
     private TransferDao transferDao;
 
-    @ListenNodeDecided   // 监听节点选择事件（主要作用就是用来修改目标对象的状态的）
-    public void listenNodeDecided(String node, TargetContext<Transfer> targetContext) {  // 入参node表示被选择的节点，targetContext是目标上下文
+    @ListenDecidedStateNode   // 监听节点选择事件（主要作用就是用来修改目标对象的状态的）
+    public void listenNodeDecided(String node, FlowContext<Transfer> context) {  // 入参node表示被选择的节点，targetContext是目标上下文
         // 根据被选择的节点修改目标对象到对应的状态，
-        Transfer transfer = targetContext.getTarget();
-        TransferStatus status;
-        switch (node) {
-            case "downPayer":
-                status = TransferStatus.DOWN_PAYER;
-                break;
-            case "upPayee":
-                status = TransferStatus.UP_PAYEE;
-                break;
-            case "restorePayer":
-                status = TransferStatus.RESTORE_PAYER;
-                break;
-            case "success":
-                status = TransferStatus.SUCCESS;
-                break;
-            case "fail":
-                status = TransferStatus.FAIL;
-                break;
-            default:
-                throw new RuntimeException("监听到非法的节点被选择");
-        }
+        Transfer transfer = context.getTarget();
+        TransferStatus status = EnumUtils.getRequiredEnum(TransferStatus.class, node);
         transfer.setStatus(status);
         transferDao.save(transfer);
     }
 
     @ListenFlowException    // 监听流程异常事件，当流程发生任何异常时都会发送这个事件
-    public void listenFlowException(Throwable throwable, TargetContext<Transfer> targetContext) {
+    public void listenFlowException(Throwable throwable, FlowContext<Transfer> context) {
         logger.info("转账执行过程中发生异常：{}", throwable.getMessage());
         // 本监听方法的作用就是在流程发生异常时可以做一些措施。
 

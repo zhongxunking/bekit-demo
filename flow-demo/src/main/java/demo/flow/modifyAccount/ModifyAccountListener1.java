@@ -11,10 +11,12 @@ package demo.flow.modifyAccount;
 import demo.dao.ModifyAccountDao;
 import demo.entity.ModifyAccount;
 import demo.enums.ModifyAccountStatus;
+import org.bekit.common.util.EnumUtils;
+import org.bekit.event.listener.PriorityType;
+import org.bekit.flow.annotation.listener.ListenDecidedNode;
 import org.bekit.flow.annotation.listener.ListenFlowException;
-import org.bekit.flow.annotation.listener.ListenNodeDecided;
 import org.bekit.flow.annotation.listener.TheFlowListener;
-import org.bekit.flow.engine.TargetContext;
+import org.bekit.flow.engine.FlowContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,33 +31,17 @@ public class ModifyAccountListener1 {
     @Autowired
     private ModifyAccountDao modifyAccountDao;
 
-    @ListenNodeDecided
-    public void listenNodeDecided(String node, TargetContext<ModifyAccount> targetContext) {
+    @ListenDecidedNode
+    public void listenNodeDecided(String node, FlowContext<ModifyAccount> context) {
         logger.info("ModifyAccountListener1.listenNodeDecide");
-        ModifyAccount modifyAccount = targetContext.getTarget();
-        ModifyAccountStatus status;
-        switch (node) {
-            case "modify":
-                status = ModifyAccountStatus.MODIFY;
-                break;
-            case "generateRefOrderNo":
-                status = ModifyAccountStatus.GENERATE_REF_ORDER_NO;
-                break;
-            case "success":
-                status = ModifyAccountStatus.SUCCESS;
-                break;
-            case "fail":
-                status = ModifyAccountStatus.FAIL;
-                break;
-            default:
-                throw new RuntimeException("监听到非法的节点被选择");
-        }
+        ModifyAccount modifyAccount = context.getTarget();
+        ModifyAccountStatus status = EnumUtils.getRequiredEnum(ModifyAccountStatus.class, node);
         modifyAccount.setStatus(status);
         modifyAccountDao.save(modifyAccount);
     }
 
-    @ListenFlowException(priorityAsc = false)
-    public void listenFlowException(Throwable throwable, TargetContext<ModifyAccount> targetContext) {
+    @ListenFlowException(priorityType = PriorityType.DESC)
+    public void listenFlowException(Throwable throwable, FlowContext<ModifyAccount> context) {
         logger.info("ModifyAccountListener1.listenFlowException");
         logger.error("账户变动过程中发生异常：{}", throwable.getMessage());
     }

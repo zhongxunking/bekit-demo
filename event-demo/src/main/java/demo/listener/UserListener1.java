@@ -10,15 +10,16 @@ package demo.listener;
 
 import demo.event.AddUserEvent;
 import demo.event.DeleteUserEvent;
-import org.bekit.event.annotation.BizListener;
+import org.bekit.event.annotation.DomainListener;
 import org.bekit.event.annotation.Listen;
+import org.bekit.event.listener.PriorityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 用户监听器1
  */
-@BizListener(priority = 1)
+@DomainListener(priority = 1)
 public class UserListener1 {
     private static final Logger logger = LoggerFactory.getLogger(UserListener1.class);
 
@@ -29,7 +30,7 @@ public class UserListener1 {
     }
 
     // @Listen的属性priorityAsc=false表示按照优先级倒叙排序，结合@BizListener(priority = 1)中priority属性，表示删除用户事件发生后本监听方法倒数第一个执行
-    @Listen(priorityAsc = false)
+    @Listen(priorityType = PriorityType.DESC)
     public void listenDeleteUserEvent(DeleteUserEvent event) {
         logger.info("UserListener1监听到删除用户事件：{}", event);
     }

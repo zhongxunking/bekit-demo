@@ -12,8 +12,9 @@ import demo.dao.ModifyAccountDao;
 import demo.entity.ModifyAccount;
 import demo.enums.ResultStatus;
 import demo.utils.OID;
-import org.bekit.flow.annotation.processor.*;
-import org.bekit.flow.engine.TargetContext;
+import org.bekit.flow.annotation.processor.Processor;
+import org.bekit.flow.annotation.processor.ProcessorExecute;
+import org.bekit.flow.engine.FlowContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,34 +31,14 @@ public class GenerateRefOrderNoProcessor {
     @Autowired
     private ModifyAccountDao modifyAccountDao;
 
-    @ProcessorBefore
-    public void before(TargetContext<ModifyAccount> targetContext) {
-        logger.info("执行GenerateRefOrderNoProcessor.before");
-    }
-
     @ProcessorExecute
-    public ResultStatus execute(TargetContext<ModifyAccount> targetContext) throws TimeoutException {
+    public ResultStatus execute(FlowContext<ModifyAccount> context) throws TimeoutException {
         logger.info("执行GenerateRefOrderNoProcessor.execute");
 
-        ModifyAccount modifyAccount = targetContext.getTarget();
+        ModifyAccount modifyAccount = context.getTarget();
         modifyAccount.setRefOrderNo(OID.newId());
         modifyAccountDao.save(modifyAccount);
 
         return ResultStatus.SUCCESS;
-    }
-
-    @ProcessorAfter
-    public void after(TargetContext<ModifyAccount> targetContext) {
-        logger.info("执行GenerateRefOrderNoProcessor.after");
-    }
-
-    @ProcessorEnd
-    public void end(TargetContext<ModifyAccount> targetContext) {
-        logger.info("执行GenerateRefOrderNoProcessor.end");
-    }
-
-    @ProcessorError
-    public void error(TargetContext<ModifyAccount> targetContext) {
-        logger.error("执行GenerateRefOrderNoProcessor.error");
     }
 }

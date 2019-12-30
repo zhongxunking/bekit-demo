@@ -10,8 +10,9 @@ package demo.flow.modifyAccount.processor;
 
 import demo.entity.ModifyAccount;
 import demo.enums.ResultStatus;
-import org.bekit.flow.annotation.processor.*;
-import org.bekit.flow.engine.TargetContext;
+import org.bekit.flow.annotation.processor.Processor;
+import org.bekit.flow.annotation.processor.ProcessorExecute;
+import org.bekit.flow.engine.FlowContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,13 +27,8 @@ public class ModifyProcessor {
     private static final Logger logger = LoggerFactory.getLogger(ModifyProcessor.class);
     private static final Random RANDOM = new Random();
 
-    @ProcessorBefore
-    public void before(TargetContext<ModifyAccount> targetContext) {
-        logger.info("执行ModifyProcessor.before");
-    }
-
     @ProcessorExecute
-    public ResultStatus execute(TargetContext<ModifyAccount> targetContext) throws TimeoutException {
+    public ResultStatus execute(FlowContext<ModifyAccount> context) throws TimeoutException {
         logger.info("执行ModifyProcessor.execute");
 
         // 这里以随机数模拟调用账务系统的结果
@@ -49,20 +45,5 @@ public class ModifyProcessor {
             default:
                 throw new TimeoutException("模拟调用账务系统超时");
         }
-    }
-
-    @ProcessorAfter
-    public void after(TargetContext<ModifyAccount> targetContext) {
-        logger.info("执行ModifyProcessor.after");
-    }
-
-    @ProcessorEnd
-    public void end(TargetContext<ModifyAccount> targetContext) {
-        logger.info("执行ModifyProcessor.end");
-    }
-
-    @ProcessorError
-    public void error(TargetContext<ModifyAccount> targetContext) {
-        logger.error("执行ModifyProcessor.error");
     }
 }

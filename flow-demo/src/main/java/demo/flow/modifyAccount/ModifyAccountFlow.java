@@ -11,8 +11,11 @@ package demo.flow.modifyAccount;
 import demo.entity.ModifyAccount;
 import demo.enums.ModifyAccountType;
 import demo.enums.ResultStatus;
-import org.bekit.flow.annotation.flow.*;
-import org.bekit.flow.engine.TargetContext;
+import org.bekit.flow.annotation.flow.EndNode;
+import org.bekit.flow.annotation.flow.Flow;
+import org.bekit.flow.annotation.flow.PhaseNode;
+import org.bekit.flow.annotation.flow.StartNode;
+import org.bekit.flow.engine.FlowContext;
 
 /**
  * 修改账务流程
@@ -21,8 +24,8 @@ import org.bekit.flow.engine.TargetContext;
 public class ModifyAccountFlow {
 
     @StartNode(processor = "modifyProcessor")
-    public String modify(ResultStatus resultStatus, TargetContext<ModifyAccount> targetContext) {
-        ModifyAccount modifyAccount = targetContext.getTarget();
+    public String modify(ResultStatus resultStatus, FlowContext<ModifyAccount> context) {
+        ModifyAccount modifyAccount = context.getTarget();
         switch (resultStatus) {
             case SUCCESS:
                 return "success";
@@ -42,7 +45,7 @@ public class ModifyAccountFlow {
 
     // 注意：@WaitNode是等待类型节点
     // 等待节点特征：除非流程引擎执行的第一个节点是本节点，否则流程引擎在执行到这类节点时会自动中断流程
-    @WaitNode(processor = "generateRefOrderNoProcessor")
+    @PhaseNode(processor = "generateRefOrderNoProcessor")
     public String generateRefOrderNo(ResultStatus resultStatus) {
         switch (resultStatus) {
             case SUCCESS:
@@ -59,21 +62,4 @@ public class ModifyAccountFlow {
     @EndNode
     public void fail() {
     }
-
-    @TargetMapping
-    public String targetMapping(ModifyAccount modifyAccount) {
-        switch (modifyAccount.getStatus()) {
-            case MODIFY:
-                return "modify";
-            case GENERATE_REF_ORDER_NO:
-                return "generateRefOrderNo";
-            case SUCCESS:
-                return "success";
-            case FAIL:
-                return "fail";
-            default:
-                throw new RuntimeException("非法的修改账务状态");
-        }
-    }
-
 }

@@ -10,11 +10,11 @@ package demo.flow.modifyAccount;
 
 import demo.dao.ModifyAccountDao;
 import demo.entity.ModifyAccount;
-import demo.enums.ModifyAccountStatus;
+import org.bekit.event.listener.PriorityType;
+import org.bekit.flow.annotation.listener.ListenDecidedNode;
 import org.bekit.flow.annotation.listener.ListenFlowException;
-import org.bekit.flow.annotation.listener.ListenNodeDecided;
 import org.bekit.flow.annotation.listener.TheFlowListener;
-import org.bekit.flow.engine.TargetContext;
+import org.bekit.flow.engine.FlowContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,13 @@ public class ModifyAccountListener2 {
     @Autowired
     private ModifyAccountDao modifyAccountDao;
 
-    @ListenNodeDecided
-    public void listenNodeDecided(String node, TargetContext<ModifyAccount> targetContext) {
+    @ListenDecidedNode
+    public void listenNodeDecided(String node, FlowContext<ModifyAccount> context) {
         logger.info("ModifyAccountListener2.listenNodeDecide");
     }
 
-    @ListenFlowException(priorityAsc = false)
-    public void listenFlowException(Throwable throwable, TargetContext<ModifyAccount> targetContext) {
+    @ListenFlowException(priorityType = PriorityType.DESC)
+    public void listenFlowException(Throwable throwable, FlowContext<ModifyAccount> context) {
         logger.info("ModifyAccountListener2.listenFlowException");
     }
 

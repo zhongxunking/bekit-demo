@@ -8,9 +8,11 @@
  */
 package demo.flow.transfer;
 
-import demo.entity.Transfer;
 import demo.enums.ResultStatus;
-import org.bekit.flow.annotation.flow.*;
+import org.bekit.flow.annotation.flow.EndNode;
+import org.bekit.flow.annotation.flow.Flow;
+import org.bekit.flow.annotation.flow.PhaseNode;
+import org.bekit.flow.annotation.flow.StartNode;
 
 /**
  * 转账交易流程
@@ -35,7 +37,7 @@ public class TransferFlow {
     }
 
     // 收款人上账节点  @StateNode是状态节点，表示在本节点执行前会先提交事务然后开启新事务并调用流程事务锁住目标对象。
-    @StateNode(processor = "upPayeeProcessor")
+    @PhaseNode(processor = "upPayeeProcessor")
     public String upPayee(ResultStatus resultStatus) {
         switch (resultStatus) {
             case SUCCESS:
@@ -51,7 +53,7 @@ public class TransferFlow {
 
     // 恢复付款人资金节点，付款人下账成功，但是收款人上账失败了，也就是说这笔转账交易失败，
     // 但是需要把付款人的钱恢复回去，并且必须得保证恢复成功
-    @StateNode(processor = "restorePayerProcessor")
+    @PhaseNode(processor = "restorePayerProcessor")
     public String restorePayer(ResultStatus resultStatus) {
         switch (resultStatus) {
             case SUCCESS:
@@ -72,24 +74,4 @@ public class TransferFlow {
     @EndNode
     public void fail() {
     }
-
-    // 目标对象映射方法，需要根据目标对象的状态等信息映射到一个流程节点，流程引擎将从这个节点进行执行
-    @TargetMapping
-    public String targetMapping(Transfer transfer) {    // 入参就是目标对象
-        switch (transfer.getStatus()) {
-            case DOWN_PAYER:
-                return "downPayer";
-            case UP_PAYEE:
-                return "upPayee";
-            case RESTORE_PAYER:
-                return "restorePayer";
-            case SUCCESS:
-                return "success";
-            case FAIL:
-                return "fail";
-            default:
-                throw new RuntimeException("非法的转账状态");
-        }
-    }
-
 }
