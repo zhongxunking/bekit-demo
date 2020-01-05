@@ -8,6 +8,7 @@
  */
 package demo.service;
 
+import demo.dao.TransferDao;
 import demo.entity.Transfer;
 import demo.enums.Status;
 import demo.enums.TransferStatus;
@@ -35,6 +36,9 @@ public class TransferService {
     @Autowired
     private FlowEngine flowEngine;
 
+    @Autowired
+    private TransferDao transferDao;
+
     @ServiceBefore   // 服务前置处理（可以进行业务参数检查，比如校验账号存不存）
     public void before(ServiceContext<TransferOrder, TransferResult> serviceContext) {
         // 本方法执行时不会有事务开启
@@ -43,7 +47,10 @@ public class TransferService {
 
     @ServiceExecute     // 服务执行，真正开始执行业务（如果@Service的enableTx属性为true，则会开启事务）
     public void execute(ServiceContext<TransferOrder, TransferResult> serviceContext) {
-        Transfer transfer = flowEngine.insertTargetAndStart("transferFlow", buildTransfer(serviceContext.getOrder()), null);
+        Transfer transfer = buildTransfer(serviceContext.getOrder());
+        transferDao.save(transfer);
+
+        transfer = flowEngine.execute("transferFlow", transfer);
         switch (transfer.getStatus()) {
             case SUCCESS:
                 break;

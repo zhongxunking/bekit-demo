@@ -23,7 +23,7 @@ public class OrderCheckServiceListener {
 
     @Listen
     public void listenServiceApplyEvent(ServiceApplyEvent event) {      // 服务申请事件
-        ServiceContext<AbstractOrder, AbstractResult> serviceContext = event.getServiceContext();
+        ServiceContext<AbstractOrder, AbstractResult> serviceContext = event.getContext();
         AbstractOrder order = serviceContext.getOrder();
         // 可以对order的入参校验，比如JSR303校验
     }
