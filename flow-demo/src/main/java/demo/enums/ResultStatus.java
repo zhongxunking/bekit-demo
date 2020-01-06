@@ -17,6 +17,6 @@ public enum ResultStatus {
 
     FAIL,
 
-    PROCESS,;
+    PROCESSING,;
 
 }

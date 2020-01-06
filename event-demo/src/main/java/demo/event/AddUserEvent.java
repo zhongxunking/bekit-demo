@@ -8,35 +8,19 @@
  */
 package demo.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * 添加用户事件
  */
+@AllArgsConstructor
+@Getter
 public class AddUserEvent {
     // 用户id
-    private String userId;
+    private final String userId;
     // 用户名
-    private String userName;
-
-    public AddUserEvent(String userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    private final String userName;
 
     @Override
     public String toString() {

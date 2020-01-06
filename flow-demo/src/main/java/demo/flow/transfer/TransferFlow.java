@@ -9,10 +9,7 @@
 package demo.flow.transfer;
 
 import demo.enums.ResultStatus;
-import org.bekit.flow.annotation.flow.EndNode;
-import org.bekit.flow.annotation.flow.Flow;
-import org.bekit.flow.annotation.flow.PhaseNode;
-import org.bekit.flow.annotation.flow.StartNode;
+import org.bekit.flow.annotation.flow.*;
 
 /**
  * 转账交易流程
@@ -29,14 +26,14 @@ public class TransferFlow {
                 return "upPayee";
             case FAIL:
                 return "fail";
-            case PROCESS:
+            case PROCESSING:
                 return null;    // 当返回null时，流程引擎会中断流程的执行
             default:
                 throw new RuntimeException("处理器返回结果不合法");
         }
     }
 
-    // 收款人上账节点  @StateNode是状态节点，表示在本节点执行前会先提交事务然后开启新事务并调用流程事务锁住目标对象。
+    // 收款人上账节点  @PhaseNode是阶段节点，流程是一个阶段一个阶段的执行
     @PhaseNode(processor = "upPayeeProcessor")
     public String upPayee(ResultStatus resultStatus) {
         switch (resultStatus) {
@@ -44,7 +41,7 @@ public class TransferFlow {
                 return "success";
             case FAIL:
                 return "restorePayer";
-            case PROCESS:
+            case PROCESSING:
                 return null;    // 和上面情况一样需要返回null，因为处理器返回结果是处理中，需要暂停执行，直到得到明确结果后才能跳转到下个节点
             default:
                 throw new RuntimeException("处理器返回结果不合法");
@@ -52,21 +49,29 @@ public class TransferFlow {
     }
 
     // 恢复付款人资金节点，付款人下账成功，但是收款人上账失败了，也就是说这笔转账交易失败，
-    // 但是需要把付款人的钱恢复回去，并且必须得保证恢复成功
+    // 接下来需要把付款人的钱恢复回去，并且必须得保证恢复成功
     @PhaseNode(processor = "restorePayerProcessor")
     public String restorePayer(ResultStatus resultStatus) {
         switch (resultStatus) {
             case SUCCESS:
                 return "fail";
-            case PROCESS:
+            case FAIL:
+                return "waitingRestorePayer";
+            case PROCESSING:
                 return null;
             default:
                 throw new RuntimeException("处理器返回结果不合法");
         }
     }
 
-    // 成功节点
-    @EndNode    // @EndNode表示结束节点，一个流程的结束节点至少有一个
+    // 等待恢复付款人资金节点
+    @PauseNode
+    public String waitingRestorePayer() {
+        return "restorePayer";
+    }
+
+    // 成功节点   @EndNode表示结束节点
+    @EndNode
     public void success() {
     }
 

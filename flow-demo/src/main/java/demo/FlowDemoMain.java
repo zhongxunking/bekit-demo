@@ -12,13 +12,11 @@ import demo.dao.TransferDao;
 import demo.entity.Transfer;
 import demo.enums.TransferStatus;
 import demo.utils.OID;
+import lombok.extern.slf4j.Slf4j;
 import org.bekit.flow.FlowEngine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.Random;
 
@@ -41,36 +39,36 @@ import java.util.Random;
  * 重点看：TransferFlow、TransferFlowListener、TransferFlowTx、DownPayerProcessor
  */
 @SpringBootApplication
+@Slf4j
 public class FlowDemoMain {
-    private static final Logger logger = LoggerFactory.getLogger(FlowDemoMain.class);
     private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(FlowDemoMain.class, args);
+
         // 流程引擎从spring容器获取（可以通过@Autowired获取）
         TransferDao transferDao = applicationContext.getBean(TransferDao.class);
         Transfer transfer = buildTransfer();
         transferDao.save(transfer);
 
-
-        PlatformTransactionManager platformTransactionManager = applicationContext.getBean(PlatformTransactionManager.class);
-
-
+        // 执行流程
         FlowEngine flowEngine = applicationContext.getBean(FlowEngine.class);
         try {
             transfer = flowEngine.execute("transferFlow", transfer);
-            logger.info("转账交易执行结果：{}", transfer);
+            log.info("转账交易执行结果：{}", transfer);
         } catch (Throwable e) {
-            logger.error("转账交易发生异常：{}", e);
+            log.error("转账交易发生异常", e);
         }
+
+        log.info("===================flow-demo演示结束===================");
     }
 
     private static Transfer buildTransfer() {
         Transfer transfer = new Transfer();
         transfer.setOrderNo(OID.newId());
         transfer.setBizNo(OID.newId());
-        transfer.setPayerAccountNo(OID.newId());    // 为了方便演示，直接生成账号
-        transfer.setPayeeAccountNo(OID.newId());    // 为了方便演示，直接生成账号
+        transfer.setPayerAccountId(OID.newId());    // 为了方便演示，直接生成账号
+        transfer.setPayeeAccountId(OID.newId());    // 为了方便演示，直接生成账号
         transfer.setAmount((long) RANDOM.nextInt(10000));   // 金额随机生成
         transfer.setStatus(TransferStatus.DOWN_PAYER);
 

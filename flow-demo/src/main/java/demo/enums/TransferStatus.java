@@ -28,6 +28,11 @@ public enum TransferStatus {
     RESTORE_PAYER,
 
     /**
+     * 等待恢复付款人资金
+     */
+    WAITING_RESTORE_PAYER,
+
+    /**
      * 成功
      */
     SUCCESS,

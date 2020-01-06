@@ -9,6 +9,8 @@
 package demo.entity;
 
 import demo.enums.TransferStatus;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -16,8 +18,10 @@ import javax.persistence.*;
  * 转账实体
  */
 @Entity
+@Getter
+@Setter
 public class Transfer {
-
+    // 主键id
     @Id
     @GeneratedValue
     @Column
@@ -33,11 +37,11 @@ public class Transfer {
 
     // 付款人账号
     @Column(length = 20)
-    private String payerAccountNo;
+    private String payerAccountId;
 
     // 收款人账号
     @Column(length = 20)
-    private String payeeAccountNo;
+    private String payeeAccountId;
 
     // 金额
     @Column
@@ -48,64 +52,8 @@ public class Transfer {
     @Enumerated(EnumType.STRING)
     private TransferStatus status;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public String getBizNo() {
-        return bizNo;
-    }
-
-    public void setBizNo(String bizNo) {
-        this.bizNo = bizNo;
-    }
-
-    public String getPayerAccountNo() {
-        return payerAccountNo;
-    }
-
-    public void setPayerAccountNo(String payerAccountNo) {
-        this.payerAccountNo = payerAccountNo;
-    }
-
-    public String getPayeeAccountNo() {
-        return payeeAccountNo;
-    }
-
-    public void setPayeeAccountNo(String payeeAccountNo) {
-        this.payeeAccountNo = payeeAccountNo;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public TransferStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TransferStatus status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
-        return String.format("Transfer{id=%d,orderNo=%s,bizNo=%s,payerAccountNo=%s,payeeAccountNo=%s,amount=%d,status=%s}", id, orderNo, bizNo, payerAccountNo, payeeAccountNo, amount, status);
+        return String.format("Transfer{id=%d,orderNo=%s,bizNo=%s,payerAccountId=%s,payeeAccountId=%s,amount=%d,status=%s}", id, orderNo, bizNo, payerAccountId, payeeAccountId, amount, status);
     }
 }

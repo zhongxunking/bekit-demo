@@ -20,17 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @TheFlowLocker(flow = "transferFlow")
 public class TransferFlowLocker {
-
     @Autowired
     private TransferDao transferDao;
 
-    @StateLock     // 锁目标对象
-    public Transfer lockTarget(FlowContext<Transfer> context) {
+    // 状态加锁，主要用于事务中对目标对象加锁
+    @StateLock
+    public Transfer stateLock(FlowContext<Transfer> context) {
         // 在并发情况下需要用锁来控制并发，你需要在这里实现具体锁住目标对象的代码
         // 这里采用数据库行级悲观锁的形式锁住目标对象
         Transfer transfer = context.getTarget();
         transfer = transferDao.findLockByBizNo(transfer.getBizNo());
         return transfer;
     }
-
 }
