@@ -36,8 +36,8 @@ public class ServiceDemoMain {
         ServiceEngine serviceEngine = applicationContext.getBean(ServiceEngine.class);
         AddUserResult addUserResult = serviceEngine.execute("addUserService", buildAddUserOrder());
         log.info("服务执行结果：{}", addUserResult);
-        for (int i = 0; i < 1; i++) {
-        }
+
+        log.info("===================service-demo演示结束===================");
     }
 
     private static AddUserOrder buildAddUserOrder() {
