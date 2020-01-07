@@ -8,7 +8,6 @@
  */
 package demo.serviceListener;
 
-import demo.order.AbstractOrder;
 import demo.result.AbstractResult;
 import org.bekit.event.annotation.Listen;
 import org.bekit.service.annotation.listener.ServiceListener;
@@ -23,9 +22,9 @@ public class OrderCheckServiceListener {
 
     @Listen
     public void listenServiceApplyEvent(ServiceApplyEvent event) {      // 服务申请事件
-        ServiceContext<AbstractOrder, AbstractResult> serviceContext = event.getContext();
-        AbstractOrder order = serviceContext.getOrder();
-        // 可以对order的入参校验，比如JSR303校验
+        ServiceContext<Object, AbstractResult> serviceContext = event.getContext();
+        Object order = serviceContext.getOrder();
+        // 可以对order的入参校验，比如采用JSR303校验
     }
 
 }

@@ -10,34 +10,17 @@ package demo.result;
 
 
 import demo.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 抽象result，定义公共的返回结果
  */
+@Getter
+@Setter
 public abstract class AbstractResult {
     // 结果状态
     private Status status;
     // 结果描述
-    private String description;
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("status=%s,description=%s", status, description);
-    }
+    private String message;
 }

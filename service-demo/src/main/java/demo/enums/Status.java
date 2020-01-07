@@ -17,6 +17,6 @@ public enum Status {
 
     FAIL,
 
-    PROCESS,;
+    PROCESSING,;
 
 }

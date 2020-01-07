@@ -8,17 +8,13 @@
  */
 package demo;
 
-import demo.order.TransferOrder;
-import demo.result.TransferResult;
-import demo.utils.OID;
+import demo.order.AddUserOrder;
+import demo.result.AddUserResult;
+import lombok.extern.slf4j.Slf4j;
 import org.bekit.service.ServiceEngine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-
-import java.util.Random;
 
 /**
  * 服务引擎使用展示
@@ -28,31 +24,27 @@ import java.util.Random;
  * 服务引擎可以不用通过流程引擎来执行业务，如果交易、订单类场景建议结合流程引擎一起使用，
  * 如果服务引擎和流程引擎一起使用，建议服务引擎不用开启事务，事务由流程引擎控制
  * <p>
- * 重点看：TransferService、ProcessResultServiceListener、OrderCheckServiceListener
+ * 重点看：AddUserService、OrderCheckServiceListener、ProcessResultServiceListener
  */
 @SpringBootApplication
+@Slf4j
 public class ServiceDemoMain {
-    private static final Logger logger = LoggerFactory.getLogger(FlowDemoMain.class);
-    private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(FlowDemoMain.class, args);
+        ApplicationContext applicationContext = SpringApplication.run(ServiceDemoMain.class, args);
         // 服务引擎从spring容器中获取（可以通过@Autowired获取）
         ServiceEngine serviceEngine = applicationContext.getBean(ServiceEngine.class);
+        AddUserResult addUserResult = serviceEngine.execute("addUserService", buildAddUserOrder());
+        log.info("服务执行结果：{}", addUserResult);
         for (int i = 0; i < 1; i++) {
-            TransferResult result = serviceEngine.execute("transferService", buildTransferOrder());
-            logger.info("服务执行结果：{}", result);
         }
     }
 
-    private static TransferOrder buildTransferOrder() {
-        TransferOrder order = new TransferOrder();
-        order.setOrderNo(OID.newId());
-        order.setPayerAccountNo(OID.newId());
-        order.setPayeeAccountNo(OID.newId());
-        order.setAmount((long) RANDOM.nextInt(10000));
+    private static AddUserOrder buildAddUserOrder() {
+        AddUserOrder order = new AddUserOrder();
+        order.setUsername("zhangsan");
+        order.setAge(20);
 
         return order;
     }
-
 }

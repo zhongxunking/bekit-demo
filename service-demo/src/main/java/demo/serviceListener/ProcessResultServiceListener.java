@@ -10,31 +10,29 @@ package demo.serviceListener;
 
 import demo.enums.Status;
 import demo.exception.DemoException;
-import demo.order.AbstractOrder;
 import demo.result.AbstractResult;
+import lombok.extern.slf4j.Slf4j;
 import org.bekit.event.annotation.Listen;
 import org.bekit.service.annotation.listener.ServiceListener;
 import org.bekit.service.engine.ServiceContext;
 import org.bekit.service.event.ServiceApplyEvent;
 import org.bekit.service.event.ServiceExceptionEvent;
 import org.bekit.service.event.ServiceFinishEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * result处理
  */
 @ServiceListener(priority = 2)
+@Slf4j
 public class ProcessResultServiceListener {
-    private static final Logger logger = LoggerFactory.getLogger(ProcessResultServiceListener.class);
 
     @Listen
     public void listenServiceApplyEvent(ServiceApplyEvent event) {
         // 可以对result进行初始化
-        ServiceContext<AbstractOrder, AbstractResult> serviceContext = event.getContext();
+        ServiceContext<Object, AbstractResult> serviceContext = event.getContext();
         AbstractResult result = serviceContext.getResult();
         result.setStatus(Status.SUCCESS);
-        result.setDescription("执行成功");
+        result.setMessage("成功");
     }
 
     @Listen
@@ -44,19 +42,18 @@ public class ProcessResultServiceListener {
     @Listen
     public void listenServiceExceptionEvent(ServiceExceptionEvent event) {  // 监听服务异常事件
         // 可以根据异常类型对result设值，比如：如果是自己抛的异常就可以根据异常里的值对result设值，如果不是自己抛的异常，则返回给上层系统处理中，因为这时候你自己也不知道执行结果是什么
-        ServiceContext<AbstractOrder, AbstractResult> serviceContext = event.getContext();
+        ServiceContext<Object, AbstractResult> serviceContext = event.getContext();
         AbstractResult result = serviceContext.getResult();
 
         Throwable throwable = event.getThrowable();
         if (throwable instanceof DemoException) {
             DemoException demoException = (DemoException) throwable;
             result.setStatus(demoException.getStatus());
-            result.setDescription(demoException.getDescription());
+            result.setMessage(demoException.getDescription());
         } else {
-            result.setStatus(Status.PROCESS);
-            result.setDescription("处理中");
-            logger.error("服务执行发生异常：", throwable);
+            result.setStatus(Status.PROCESSING);
+            result.setMessage("处理中");
+            log.error("服务执行发生异常", throwable);
         }
     }
-
 }
