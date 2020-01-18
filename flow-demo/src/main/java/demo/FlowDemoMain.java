@@ -11,7 +11,7 @@ package demo;
 import demo.dao.TransferDao;
 import demo.entity.Transfer;
 import demo.enums.TransferStatus;
-import demo.utils.OID;
+import demo.utils.UID;
 import lombok.extern.slf4j.Slf4j;
 import org.bekit.flow.FlowEngine;
 import org.springframework.boot.SpringApplication;
@@ -65,10 +65,9 @@ public class FlowDemoMain {
 
     private static Transfer buildTransfer() {
         Transfer transfer = new Transfer();
-        transfer.setOrderNo(OID.newId());
-        transfer.setBizNo(OID.newId());
-        transfer.setPayerAccountId(OID.newId());    // 为了方便演示，直接生成账号
-        transfer.setPayeeAccountId(OID.newId());    // 为了方便演示，直接生成账号
+        transfer.setBizNo(UID.newId());
+        transfer.setPayerAccountId(UID.newId());    // 为了方便演示，直接生成账号
+        transfer.setPayeeAccountId(UID.newId());    // 为了方便演示，直接生成账号
         transfer.setAmount((long) RANDOM.nextInt(10000));   // 金额随机生成
         transfer.setStatus(TransferStatus.DOWN_PAYER);
 

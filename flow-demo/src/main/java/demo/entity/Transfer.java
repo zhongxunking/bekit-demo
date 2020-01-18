@@ -27,10 +27,6 @@ public class Transfer {
     @Column
     private Long id;
 
-    // 订单号
-    @Column(length = 20, unique = true)
-    private String orderNo;
-
     // 流水号
     @Column(length = 20, unique = true)
     private String bizNo;
@@ -54,6 +50,6 @@ public class Transfer {
 
     @Override
     public String toString() {
-        return String.format("Transfer{id=%d,orderNo=%s,bizNo=%s,payerAccountId=%s,payeeAccountId=%s,amount=%d,status=%s}", id, orderNo, bizNo, payerAccountId, payeeAccountId, amount, status);
+        return String.format("Transfer{id=%d,bizNo=%s,payerAccountId=%s,payeeAccountId=%s,amount=%d,status=%s}", id, bizNo, payerAccountId, payeeAccountId, amount, status);
     }
 }

@@ -27,7 +27,7 @@ public class UpPayeeProcessor {
 
     @ProcessorExecute
     public ResultStatus execute(FlowContext<Transfer> context) throws TimeoutException {
-        log.info("执行UpPayeeProcessor.execute");
+        log.info("执行处理器[UpPayeeProcessor]");
         Transfer transfer = context.getTarget();
         return AccountMock.upAccount(transfer.getPayeeAccountId(), transfer.getAmount());
     }

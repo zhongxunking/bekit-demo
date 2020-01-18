@@ -24,7 +24,4 @@ public interface TransferDao {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Transfer findLockByBizNo(String bizNo);
-
-    Transfer findByBizNo(String bizNo);
-
 }

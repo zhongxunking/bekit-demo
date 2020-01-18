@@ -13,9 +13,7 @@ import demo.entity.Transfer;
 import demo.enums.TransferStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.bekit.common.util.EnumUtils;
-import org.bekit.flow.annotation.listener.ListenDecidedStateNode;
-import org.bekit.flow.annotation.listener.ListenFlowException;
-import org.bekit.flow.annotation.listener.TheFlowListener;
+import org.bekit.flow.annotation.listener.*;
 import org.bekit.flow.engine.FlowContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,10 +26,26 @@ public class TransferFlowListener {
     @Autowired
     private TransferDao transferDao;
 
+    @ListenFlowStart
+    public void listenFlowStart(FlowContext<Transfer> context) {
+        log.info("流程[transfer]开始执行");
+    }
+
+    @ListenExecutingNode
+    public void listenExecutingNode(String node, FlowContext<Transfer> context) {
+        log.info("流程[transfer]即将执行节点[{}]", node);
+    }
+
+    @ListenDecidedNode
+    public void listenDecidedNode(String node, FlowContext<Transfer> context) {
+        log.info("流程[transfer]选择节点[{}]作为下一个要执行的节点", node);
+    }
+
     // 监听节点选择事件（主要作用就是用来修改目标对象的状态）
     // 入参node表示被选择的状态节点，context是流程上下文
     @ListenDecidedStateNode
     public void listenDecidedStateNode(String node, FlowContext<Transfer> context) {
+        log.info("节点[{}]是状态节点，对交易记录进行状态更新", node);
         // 根据被选择的节点修改目标对象到对应的状态，
         Transfer transfer = context.getTarget();
         // bekit专门提供了EnumUtils工具类，用于在节点名称与状态枚举之间进行转换
@@ -43,7 +57,7 @@ public class TransferFlowListener {
     // 监听流程异常事件，当流程发生任何异常时都会发送这个事件
     @ListenFlowException
     public void listenFlowException(Throwable throwable, FlowContext<Transfer> context) {
-        log.info("转账流程执行过程中发生异常：{}", throwable.getMessage());
+        log.info("流程[transfer]执行过程中发生异常：{}", throwable.getMessage());
         // 本监听方法的作用就是在流程发生异常时可以做一些措施。
 
         // 当一个流程被某些原因中断时，我们可以通过定时任务扫描表将中间状态的交易查询出来，继续执行交易。
@@ -52,5 +66,10 @@ public class TransferFlowListener {
 
         // 一个更好的方式就是将发生异常的交易发送到MQ的延迟队列，同时本系统监听MQ消息，当监听到这种数据是就继续执行这笔交易
         // 也就是你可以在本方法里实现将数据发送到MQ
+    }
+
+    @ListenFlowEnd
+    public void listenFlowEnd(FlowContext<Transfer> context) {
+        log.info("流程[transfer]执行结束");
     }
 }
