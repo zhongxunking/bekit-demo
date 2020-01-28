@@ -44,6 +44,7 @@ public class AccountMock {
             log.info("模拟调用账务系统5%概率返回处理中");
             return ResultStatus.PROCESSING;
         } else {
+            log.info("模拟调用账务系统5%概率调用超时");
             throw new TimeoutException("模拟调用账务系统5%概率调用超时");
         }
     }
