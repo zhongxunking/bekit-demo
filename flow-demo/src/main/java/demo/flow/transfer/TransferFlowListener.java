@@ -45,11 +45,11 @@ public class TransferFlowListener {
     // 入参node表示被选择的状态节点，context是流程上下文
     @ListenDecidedStateNode
     public void listenDecidedStateNode(String node, FlowContext<Transfer> context) {
-        log.info("节点[{}]是状态节点，对交易记录进行状态更新", node);
-        // 根据被选择的节点修改目标对象到对应的状态，
-        Transfer transfer = context.getTarget();
         // bekit专门提供了EnumUtils工具类，用于在节点名称与状态枚举之间进行转换
         TransferStatus status = EnumUtils.getEnum(TransferStatus.class, node);
+        log.info("节点[{}]是状态节点，更新交易记录状态为[{}]", node, status);
+        // 根据被选择的节点修改目标对象到对应的状态，
+        Transfer transfer = context.getTarget();
         transfer.setStatus(status);
         transferDao.save(transfer);
     }

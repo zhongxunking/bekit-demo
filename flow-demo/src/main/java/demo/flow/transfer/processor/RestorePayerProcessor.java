@@ -27,7 +27,7 @@ public class RestorePayerProcessor {
 
     @ProcessorExecute
     public ResultStatus execute(FlowContext<Transfer> context) throws TimeoutException {
-        log.info("执行处理器[RestorePayerProcessor]");
+        log.info("执行处理器[restorePayerProcessor]");
         Transfer transfer = context.getTarget();
         return AccountMock.upAccount(transfer.getPayerAccountId(), transfer.getAmount());
     }

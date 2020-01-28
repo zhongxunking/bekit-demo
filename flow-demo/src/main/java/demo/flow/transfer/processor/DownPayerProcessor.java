@@ -28,7 +28,7 @@ public class DownPayerProcessor {
     // 处理器执行方法，本方法的返回值会作为整个处理器的返回值
     @ProcessorExecute
     public ResultStatus execute(FlowContext<Transfer> context) throws TimeoutException {
-        log.info("执行处理器[DownPayerProcessor]");
+        log.info("执行处理器[downPayerProcessor]");
         Transfer transfer = context.getTarget();
         return AccountMock.downAccount(transfer.getPayerAccountId(), transfer.getAmount());
     }

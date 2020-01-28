@@ -11,8 +11,7 @@ package demo.flow.transfer;
 import demo.dao.TransferDao;
 import demo.entity.Transfer;
 import lombok.extern.slf4j.Slf4j;
-import org.bekit.flow.annotation.locker.StateLock;
-import org.bekit.flow.annotation.locker.TheFlowLocker;
+import org.bekit.flow.annotation.locker.*;
 import org.bekit.flow.engine.FlowContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,6 +24,13 @@ public class TransferFlowLocker {
     @Autowired
     private TransferDao transferDao;
 
+    // 加流程锁
+    @FlowLock
+    public Transfer flowLock(FlowContext<Transfer> context) {
+        log.info("对流程[transfer]加流程锁（仅用于演示。实际场景可用分布式锁实现）");
+        return context.getTarget();
+    }
+
     // 状态加锁，主要用于事务中对目标对象加锁
     @StateLock
     public Transfer stateLock(FlowContext<Transfer> context) {
@@ -34,5 +40,17 @@ public class TransferFlowLocker {
         Transfer transfer = context.getTarget();
         transfer = transferDao.findLockByBizNo(transfer.getBizNo());
         return transfer;
+    }
+
+    // 解状态锁
+    @StateUnlock
+    public void stateUnlock(FlowContext<Transfer> context) {
+        log.info("对流程[transfer]解状态锁（仅用于演示。由于事务提交后，数据库的行级悲观锁会自动释放，所以无需手动解锁）");
+    }
+
+    // 解流程锁
+    @FlowUnlock
+    public void flowUnlock(FlowContext<Transfer> context) {
+        log.info("对流程[transfer]解流程锁（仅用于演示）");
     }
 }
