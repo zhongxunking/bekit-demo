@@ -33,10 +33,7 @@ import java.util.Random;
  * （题外话：有的账务系统本身就提供转账功能，可以直接通过数据库事务保证数据一致性，但是像一些复合型转账，账务系统就不能再提供了，
  * 因为账务系统是个底层核心系统，不应该夹杂这样的业务属性，也就是说像复合型转账这类业务还是需要一个上层系统来保证数据的最终一致性）
  * <p>
- * （流程引擎并不能帮你保证数据的一致性，一致性需要你自己合理的设计流程，
- * 流程引擎能帮你的是：简化流程的定义、简化流程的调度，增加流程的可复用性）
- * <p>
- * 重点看：TransferFlow、TransferFlowListener、TransferFlowTx、DownPayerProcessor
+ * 重点看：TransferFlow、TransferFlowListener、TransferFlowLocker、TransferFlowMapper、DownPayerProcessor
  */
 @SpringBootApplication
 @Slf4j
