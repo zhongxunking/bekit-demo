@@ -33,12 +33,12 @@ public class TransferFlow {
         }
     }
 
-    // 收款人上账节点  @PhaseNode是阶段节点，流程是一个阶段一个阶段的执行
+    // 收款人上账节点  @PhaseNode是阶段节点，是最常用的节点类型，流程是一个阶段一个阶段的执行
     @PhaseNode(processor = "upPayeeProcessor")
     public String upPayee(ResultStatus resultStatus) {
         switch (resultStatus) {
             case SUCCESS:
-                return "success";
+                return "sendSuccessMessage";
             case FAIL:
                 return "restorePayer";
             case PROCESSING:
@@ -64,13 +64,19 @@ public class TransferFlow {
         }
     }
 
-    // 等待恢复付款人资金节点
+    // 等待恢复付款人资金节点   @PauseNode是暂停节点，流程执行到这个节点会暂停执行，只有这个节点是第一个被执行的节点时，这个节点才会被执行
     @PauseNode
     public String waitingRestorePayer() {
         return "restorePayer";
     }
 
-    // 成功节点   @EndNode表示结束节点
+    // 发送转账成功通知   @TransientNode是瞬态节点，它是没有独立状态的，在它执行前不会对事务做任何处理（不会提交事务，也不会新建事务）
+    @TransientNode(processor = "sendSuccessMessageProcessor")
+    public String sendSuccessMessage() {
+        return "success";
+    }
+
+    // 成功节点   @EndNode是结束节点，流程执行到这个节点会结束执行
     @EndNode
     public void success() {
     }
