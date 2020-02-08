@@ -32,7 +32,7 @@ public class AddUserService {
     // 服务前置处理（可以进行业务参数检查，比如校验账号存不存），本方法执行前不会主动开始事务
     @ServiceBefore
     public void before(ServiceContext<AddUserOrder, AddUserResult> context) {
-        log.info("执行TransferService.serviceCheck");
+        log.info("执行TransferService.before");
     }
 
     // 服务执行，真正开始执行业务（如果@Service的enableTx=true，则会主动开启事务，本方法执行结束后会提交事务）
@@ -58,6 +58,6 @@ public class AddUserService {
     // 服务后置处理（本方法执行前不会主动开始事务）
     @ServiceAfter
     public void after(ServiceContext<AddUserOrder, AddUserResult> context) {
-        log.info("执行TransferService.serviceAfter");
+        log.info("执行TransferService.after");
     }
 }
