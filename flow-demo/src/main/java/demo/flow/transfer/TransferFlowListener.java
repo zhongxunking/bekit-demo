@@ -28,16 +28,19 @@ public class TransferFlowListener {
 
     @ListenFlowStart
     public void listenFlowStart(FlowContext<Transfer> context) {
+        // 仅用于演示，可根据实际场景选择是否监听本事件
         log.info("流程[transfer]开始执行");
     }
 
     @ListenExecutingNode
     public void listenExecutingNode(String node, FlowContext<Transfer> context) {
+        // 仅用于演示，可根据实际场景选择是否监听本事件
         log.info("流程[transfer]即将执行节点[{}]", node);
     }
 
     @ListenDecidedNode
     public void listenDecidedNode(String node, FlowContext<Transfer> context) {
+        // 仅用于演示，可根据实际场景选择是否监听本事件
         log.info("流程[transfer]选择节点[{}]作为下一个要执行的节点", node);
     }
 
@@ -57,6 +60,7 @@ public class TransferFlowListener {
     // 监听流程异常事件，当流程发生任何异常时都会发送这个事件
     @ListenFlowException
     public void listenFlowException(Throwable throwable, FlowContext<Transfer> context) {
+        // 仅用于演示，可根据实际场景选择是否监听本事件
         log.info("流程[transfer]执行过程中发生异常：{}", throwable.getMessage());
         // 本监听方法的作用就是在流程发生异常时可以做一些措施。
 
@@ -70,6 +74,7 @@ public class TransferFlowListener {
 
     @ListenFlowEnd
     public void listenFlowEnd(FlowContext<Transfer> context) {
+        // 仅用于演示，可根据实际场景选择是否监听本事件
         log.info("流程[transfer]执行结束");
     }
 }
