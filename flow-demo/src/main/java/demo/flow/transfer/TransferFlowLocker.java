@@ -16,7 +16,7 @@ import org.bekit.flow.engine.FlowContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * 转账交易流程事务
+ * 转账交易流程加锁器
  * 在并发情况下需要用锁来控制并发，你需要在这里实现具体锁住目标对象的代码
  */
 @TheFlowLocker(flow = "transferFlow")
